@@ -236,4 +236,4 @@ MYSQL_DB=satya_sai_auto
 ## Support
 
 For technical issues or customization, contact the developer.
-For shop inquiries: +91 98765 43210
+For shop inquiries: +91 954256****
