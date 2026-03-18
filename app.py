@@ -51,8 +51,13 @@ app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', 'password')
 app.config['MYSQL_DB']       = os.environ.get('MYSQL_DB', 'satya_sai_auto')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
+# SSL configuration for TiDB Cloud / production
+app.config['MYSQL_SSL_CA'] = os.environ.get('MYSQL_SSL_CA', None)
+app.config['MYSQL_SSL_VERIFY_CERT'] = True
+
 mysql   = MySQL(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 def get_cursor():
