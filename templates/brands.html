@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Brands | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <h1 class="mt-2"><i class="fas fa-award text-warning me-2"></i>Our Partner Brands</h1>
+    <p class="text-muted">Authorized dealer of India's top auto electrical brands</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      {% for brand in brands %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="card-dark text-center py-4 h-100 d-flex flex-column">
+          <div class="brand-logo-container mx-auto mb-3" style="width:120px;height:120px;background:#fff;border-radius:12px;padding:15px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)">
+            <img src="{{ url_for('static', filename=brand.name + '.png') }}" alt="{{ brand.name }}" style="max-width:100%;max-height:100%;object-fit:contain" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=font-size:28px>{{ brand.name[:2] }}</span>'">
+          </div>
+          {% if brand.description %}
+            <p class="text-muted mt-2 small px-3 flex-grow-1">{{ brand.description }}</p>
+          {% else %}
+            <p class="text-muted mt-2 small px-3 flex-grow-1">
+              {% if brand.name == 'Bosch' %}World-renowned German engineering for automotive parts and diagnostics.{% endif %}
+              {% if brand.name == 'Exide' %}India's most trusted battery brand for all vehicle types.{% endif %}
+              {% if brand.name == 'Amaron' %}Maintenance-free batteries with advanced technology.{% endif %}
+              {% if brand.name == 'Lucas TVS' %}Premium quality auto electrical products from the TVS group.{% endif %}
+              {% if brand.name == 'Spark Minda' %}Leading manufacturer of auto electrical and electronics.{% endif %}
+              {% if brand.name == 'Valeo' %}French multinational automotive supplier with innovative solutions.{% endif %}
+              {% if brand.name == 'Comstar' %}Specialized lubricants and automotive chemicals.{% endif %}
+              {% if brand.name == 'Autolek' %}Quality auto electrical components at competitive prices.{% endif %}
+              {% if brand.name == 'Tata Green' %}Eco-friendly batteries from the trusted Tata Group.{% endif %}
+            </p>
+          {% endif %}
+          <a href="/products?brand={{ brand.id }}" class="btn-outline-custom mt-3" style="font-size:13px;padding:9px 22px">View Spare Parts</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-5 text-center" data-aos="fade-up">
+      <div style="background:rgba(255,214,0,0.06);border:2px solid rgba(255,214,0,0.3);border-radius:var(--radius-lg);padding:40px">
+        <i class="fas fa-certificate fa-3x text-warning mb-3"></i>
+        <h3 style="font-family:var(--font-display);font-size:26px">Authorized Bosch Workshop</h3>
+        <p class="text-muted mt-2 mb-4">We are an officially certified Bosch service center, ensuring genuine parts and expert service.</p>
+        <a href="/booking" class="btn-primary-custom"><i class="fas fa-calendar-check me-1"></i>Book Bosch Service</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

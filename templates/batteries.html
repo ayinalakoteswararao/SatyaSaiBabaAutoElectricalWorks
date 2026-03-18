@@ -1,0 +1,1011 @@
+{% extends "base.html" %}
+{% block title %}Batteries | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+{% set inverter_only = request.args.get('type') == 'inverter' %}
+<div class="page-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="/batteries">Batteries</a></li><li class="breadcrumb-item active">{% if inverter_only %}Inverter Batteries{% else %}All Batteries{% endif %}</li></ol></nav>
+    <h1 class="mt-2"><i class="fas fa-battery-full text-warning me-2"></i>{% if inverter_only %}Inverter Batteries{% else %}Battery Solutions{% endif %}</h1>
+    <p class="text-muted">{% if inverter_only %}Power backup solutions for home & office inverters{% else %}Amaron, Exide & Tata Green batteries with warranty for all vehicles{% endif %}</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="filter-bar mb-4">
+      <form method="GET" class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label text-muted small">Battery Brand</label>
+          <select name="brand" class="form-select">
+            <option value="">All Brands</option>
+            {% for b in battery_brands %}<option value="{{ b }}" {% if filters.brand==b %}selected{% endif %}>{{ b }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label text-muted small">Vehicle Type</label>
+          <select name="vehicle" class="form-select">
+            <option value="">All Vehicles</option>
+            <option value="2-wheeler" {% if filters.vehicle=='2-wheeler' %}selected{% endif %}>2 Wheeler (Bikes/Scooters)</option>
+            <option value="3-wheeler" {% if filters.vehicle=='3-wheeler' %}selected{% endif %}>3 Wheeler (Auto)</option>
+            <option value="4-wheeler" {% if filters.vehicle=='4-wheeler' %}selected{% endif %}>4 Wheeler (Cars)</option>
+            <option value="lightweight" {% if filters.vehicle=='lightweight' %}selected{% endif %}>Light Weight Vehicle</option>
+            <option value="heavy" {% if filters.vehicle=='heavy' %}selected{% endif %}>Heavy Vehicle (Truck/Bus)</option>
+            <option value="genset" {% if filters.vehicle=='genset' %}selected{% endif %}>Generator/Genset</option>
+          </select>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+          <button type="submit" class="btn-primary-custom flex-grow-1">Filter</button>
+          <a href="/batteries" class="btn-outline-custom">Clear</a>
+        </div>
+      </form>
+    </div>
+    <div class="row g-3 mb-4">
+      {% if not inverter_only %}
+      {% for brand,icon,brand_class in [('EXIDE-MILEAGE','fa-road','brand-exide'),('EXIDE-XPRESS','fa-tachometer-alt','brand-exide'),('EXIDE-EKO','fa-leaf','brand-exide'),('EXIDE-XPLORE','fa-motorcycle','brand-exide'),('EXIDE-INVAMASTER','fa-home','brand-exide'),('AMARON-HILIFE','fa-star','brand-amaron'),('AMARON-FLO','fa-tint','brand-amaron'),('AMARON-GO','fa-car','brand-amaron'),('AMARON-BLACK','fa-bolt','brand-amaron'),('AMARON-PROBIKE','fa-motorcycle','brand-amaron'),('TATAGREEN-PREMIO','fa-car-side','brand-tatagreen'),('TATAGREEN-VELOCITY','fa-motorcycle','brand-tatagreen'),('TATAGREEN-SILVER','fa-gem','brand-tatagreen'),('TATAGREEN-ROADSTAR','fa-truck','brand-tatagreen'),('TATAGREEN-TG','fa-truck-moving','brand-tatagreen'),('TATAGREEN-INVERTER','fa-home','brand-tatagreen')] %}
+      <div class="col-md-3 col-sm-6">
+        <a href="/batteries?brand={{ brand }}" class="text-decoration-none">
+          <div class="battery-card text-center py-4 {% if filters.brand==brand %}border-yellow{% endif %} {{ brand_class }}">
+            <i class="fas {{ icon }} fa-2x mb-2 brand-icon-color"></i>
+            <div class="brand-text-color" style="font-family:var(--font-display);font-weight:700;font-size:14px">{{ brand }}</div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if not inverter_only %}
+    <!-- ========== 2 WHEELERS ========== -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-motorcycle me-2 text-warning"></i>2 Wheelers</h2>
+      <p class="text-muted">Batteries for Bikes, Scooters & Motorcycles</p>
+    </div>
+
+    <!-- EXIDE EKO Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-leaf me-2" style="color:#DA0011"></i>EXIDE EKO Series</h3>
+        <p class="text-muted">Eco-friendly batteries with advanced technology for 2-wheelers</p>
+      </div>
+      <div class="row g-4">
+        {% set eko_batteries = [
+          ('EKO 2.5L', '36 MONTH WARRANTY', '1,850'),
+          ('EKO 2.5R', '36 MONTH WARRANTY', '1,850'),
+          ('EKO 3L', '36 MONTH WARRANTY', '2,150'),
+          ('EKO 3R', '36 MONTH WARRANTY', '2,150'),
+          ('EKO 4L', '36 MONTH WARRANTY', '2,450'),
+          ('EKO 4R', '36 MONTH WARRANTY', '2,450'),
+          ('EKO 5L', '36 MONTH WARRANTY', '2,850'),
+          ('EKO 5R', '36 MONTH WARRANTY', '2,850')
+        ] %}
+        {% for model, warranty, price in eko_batteries %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE EKO</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Environment friendly with superior power delivery</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- EXIDE XPLORE Two-Wheeler Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-motorcycle me-2" style="color:#DA0011"></i>EXIDE XPLORE Two-Wheeler Series</h3>
+        <p class="text-muted">VRLA Technology | Bikes, Scooters | Maintenance-Free</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_xplore = [
+          ('12XL2.5L-C', '24 MONTH WARRANTY', '1,650'),
+          ('12XL5L-B', '24 MONTH WARRANTY', '2,350'),
+          ('12XL7B-B', '24 MONTH WARRANTY', '2,850'),
+          ('12XL9-B', '24 MONTH WARRANTY', '3,250'),
+          ('12XL14L-A2', '24 MONTH WARRANTY', '4,150'),
+          ('XLTX14', '24 MONTH WARRANTY', '4,450'),
+          ('XLTZ4A', '24 MONTH WARRANTY', '1,450'),
+          ('XLTZ5A', '24 MONTH WARRANTY', '2,150'),
+          ('XLTZ6', '24 MONTH WARRANTY', '2,650'),
+          ('XLTZ7', '24 MONTH WARRANTY', '3,150'),
+          ('XLTZ9', '24 MONTH WARRANTY', '3,650')
+        ] %}
+        {% for model, warranty, price in exide_xplore %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE XPLORE</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">VRLA technology for bikes & scooters - zero maintenance, high cranking power</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Pro Bike Two-Wheeler Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-motorcycle me-2" style="color:#9AC93B"></i>AMARON Pro Bike Two-Wheeler Series</h3>
+        <p class="text-muted">VRLA Technology | Bikes, Scooters | Zero Maintenance</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_bike = [
+          ('Pro Bike ABR-PR', '24 MONTH WARRANTY', '1,750'),
+          ('Pro Bike ABR-PT', '24 MONTH WARRANTY', '1,850'),
+          ('Pro Bike ABR-14R', '24 MONTH WARRANTY', '2,350'),
+          ('Pro Bike ABR-12R', '24 MONTH WARRANTY', '2,150'),
+          ('Pro Bike ABR-9R', '24 MONTH WARRANTY', '1,850'),
+          ('Pro Bike ABR-5R', '24 MONTH WARRANTY', '1,550'),
+          ('Pro Bike ABR-5L', '24 MONTH WARRANTY', '1,550'),
+          ('Pro Bike ABR-2.5R', '24 MONTH WARRANTY', '1,250')
+        ] %}
+        {% for model, warranty, price in amaron_bike %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">Pro Bike</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">VRLA technology for motorcycles & scooters - maintenance-free, high cranking power</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Velocity Plus Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-motorcycle me-2" style="color:#016BB2"></i>TATA GREEN Velocity Plus Series</h3>
+        <p class="text-muted">VRLA Technology | Two-Wheeler Batteries | Maintenance-Free</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_velocity = [
+          ('Velocity YTZ4', '24 MONTH WARRANTY', '1,450'),
+          ('Velocity YTZ5', '24 MONTH WARRANTY', '1,650'),
+          ('Velocity YTZ7', '24 MONTH WARRANTY', '2,150'),
+          ('Velocity YTZ10S', '24 MONTH WARRANTY', '2,850'),
+          ('Velocity YTX4L-BS', '24 MONTH WARRANTY', '1,350'),
+          ('Velocity YTX7L-BS', '24 MONTH WARRANTY', '2,050')
+        ] %}
+        {% for model, warranty, price in tata_velocity %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">Velocity Plus</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">VRLA Valve Regulated Lead Acid technology for bikes - zero maintenance</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ========== 3 WHEELERS ========== -->
+    <div class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-truck-pickup me-2 text-warning"></i>3 Wheelers</h2>
+      <p class="text-muted">Batteries for Auto Rickshaws & 3-Wheeler Commercial Vehicles</p>
+    </div>
+
+    <!-- EXIDE EKO 3W Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-leaf me-2" style="color:#DA0011"></i>EXIDE EKO 3W Series</h3>
+        <p class="text-muted">Eco-friendly batteries for Auto Rickshaws & 3-Wheelers</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_eko_3w = [
+          ('EKO 3W 80L', '24 MONTH WARRANTY', '4,500'),
+          ('EKO 3W 100L', '24 MONTH WARRANTY', '5,200'),
+          ('EKO 3W 120L', '24 MONTH WARRANTY', '6,100')
+        ] %}
+        {% for model, warranty, price in exide_eko_3w %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EKO 3W</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Specially designed for 3-wheelers - high vibration resistance</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON 3W Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-truck-pickup me-2" style="color:#9AC93B"></i>AMARON 3W Series</h3>
+        <p class="text-muted">Three-Wheeler Batteries | High Performance | Long Life</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_3w = [
+          ('3W 80L', '24 MONTH WARRANTY', '4,850'),
+          ('3W 100L', '24 MONTH WARRANTY', '5,650'),
+          ('3W 120L', '24 MONTH WARRANTY', '6,450')
+        ] %}
+        {% for model, warranty, price in amaron_3w %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON 3W</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">High cranking power for auto rickshaws and 3-wheelers</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN 3W Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-truck-pickup me-2" style="color:#016BB2"></i>TATA GREEN 3W Series</h3>
+        <p class="text-muted">SVL 500 & TG 550 | 3-Wheeler Batteries</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_3w = [
+          ('SVL 500', '24 MONTH WARRANTY', '5,250'),
+          ('TG 550', '24 MONTH WARRANTY', '5,850')
+        ] %}
+        {% for model, warranty, price in tata_3w %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">TATA 3W</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Designed for auto rickshaws and 3-wheeler applications</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ========== 4 WHEELERS ========== -->
+    <div class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-car me-2 text-warning"></i>4 Wheelers</h2>
+      <p class="text-muted">Batteries for Cars, SUVs, MUVs & Passenger Vehicles</p>
+    </div>
+
+    <!-- EXIDE MILEAGE Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-road me-2" style="color:#DA0011"></i>EXIDE MILEAGE Series</h3>
+        <p class="text-muted">60 Month Warranty | Robust design for stringent applications</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_batteries = [
+          ('ML38B20L', '60 MONTH WARRANTY', '4785'),
+          ('ML38B20R', '60 MONTH WARRANTY', '4785'),
+          ('ML40LBH', '60 MONTH WARRANTY', ''),
+          ('ML40RBH', '60 MONTH WARRANTY', '5863'),
+          ('ML45D21LBH', '60 MONTH WARRANTY', '7722'),
+          ('ML55B24L(T1)', '60 MONTH WARRANTY', ''),
+          ('ML55D23L', '60 MONTH WARRANTY', '8121'),
+          ('ML75D23LBH', '60 MONTH WARRANTY', '8552'),
+          ('ML85D26R', '60 MONTH WARRANTY', ''),
+          ('MLDIN44LH', '60 MONTH WARRANTY', '7074'),
+          ('MLDIN44R', '60 MONTH WARRANTY', ''),
+          ('MLDIN50', '60 MONTH WARRANTY', '7766'),
+          ('MLDIN55', '60 MONTH WARRANTY', '8886'),
+          ('MLDIN55R', '60 MONTH WARRANTY', ''),
+          ('MLDIN60', '60 MONTH WARRANTY', '9101'),
+          ('MLDIN65LH', '60 MONTH WARRANTY', ''),
+          ('MLDIN66', '60 MONTH WARRANTY', '9137'),
+          ('MLDIN70(ISS)', '60 MONTH WARRANTY', ''),
+          ('MLDIN80', '60 MONTH WARRANTY', '13284'),
+          ('MLM42(ISS)', '60 MONTH WARRANTY', '5886')
+        ] %}
+        {% for model, warranty, price in exide_batteries %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE MILEAGE</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Robust design to take care of stringent application requirements</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Hi Life Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-star me-2" style="color:#9AC93B"></i>AMARON Hi Life Series</h3>
+        <p class="text-muted">66-72 Month Warranty | Premium long-life batteries with advanced technology</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_hilife = [
+          ('Hi Life 38B20L', '72 MONTH WARRANTY', '4,850'),
+          ('Hi Life 38B20R', '72 MONTH WARRANTY', '4,850'),
+          ('Hi Life 42B20L', '72 MONTH WARRANTY', '5,250'),
+          ('Hi Life 42B20R', '72 MONTH WARRANTY', '5,250'),
+          ('Hi Life 55D23L', '66 MONTH WARRANTY', '6,450'),
+          ('Hi Life 55D23R', '66 MONTH WARRANTY', '6,450'),
+          ('Hi Life 80D26L', '66 MONTH WARRANTY', '8,250'),
+          ('Hi Life 80D26R', '66 MONTH WARRANTY', '8,250'),
+          ('Hi Life 90D26L', '66 MONTH WARRANTY', '9,150'),
+          ('Hi Life 90D26R', '66 MONTH WARRANTY', '9,150')
+        ] %}
+        {% for model, warranty, price in amaron_hilife %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Hi Life</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Silver Alloy Technology for longer life and zero maintenance</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Flo Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-tint me-2" style="color:#9AC93B"></i>AMARON Flo Series</h3>
+        <p class="text-muted">55-60 Month Warranty | High performance with superior reserve capacity</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_flo = [
+          ('Flo 38B20L', '60 MONTH WARRANTY', '4,450'),
+          ('Flo 38B20R', '60 MONTH WARRANTY', '4,450'),
+          ('Flo 50B24L', '60 MONTH WARRANTY', '5,650'),
+          ('Flo 50B24R', '60 MONTH WARRANTY', '5,650'),
+          ('Flo 55D23L', '55 MONTH WARRANTY', '6,150'),
+          ('Flo 55D23R', '55 MONTH WARRANTY', '6,150'),
+          ('Flo 65D23L', '55 MONTH WARRANTY', '6,950'),
+          ('Flo 65D23R', '55 MONTH WARRANTY', '6,950')
+        ] %}
+        {% for model, warranty, price in amaron_flo %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Flo</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">High cranking power with enhanced vibration resistance</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Go Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-car me-2" style="color:#9AC93B"></i>AMARON Go Series</h3>
+        <p class="text-muted">44 Month Warranty | Value for money with reliable performance</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_go = [
+          ('Go 38B20L', '44 MONTH WARRANTY', '3,850'),
+          ('Go 38B20R', '44 MONTH WARRANTY', '3,850'),
+          ('Go 50B24L', '44 MONTH WARRANTY', '4,650'),
+          ('Go 50B24R', '44 MONTH WARRANTY', '4,650'),
+          ('Go 55D23L', '44 MONTH WARRANTY', '5,250'),
+          ('Go 55D23R', '44 MONTH WARRANTY', '5,250'),
+          ('Go 65D23L', '44 MONTH WARRANTY', '5,850'),
+          ('Go 65D23R', '44 MONTH WARRANTY', '5,850')
+        ] %}
+        {% for model, warranty, price in amaron_go %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Go</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Economical choice with maintenance-free operation</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Pro 4W Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-car me-2" style="color:#9AC93B"></i>AMARON Pro 4W Series</h3>
+        <p class="text-muted">DIN Series | Premium Car Batteries | Long Life</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_pro_4w = [
+          ('Pro DIN 44', '60 MONTH WARRANTY', '7,850'),
+          ('Pro DIN 50', '60 MONTH WARRANTY', '8,450'),
+          ('Pro DIN 55', '60 MONTH WARRANTY', '9,150'),
+          ('Pro DIN 60', '60 MONTH WARRANTY', '9,850'),
+          ('Pro DIN 66', '60 MONTH WARRANTY', '10,450'),
+          ('Pro DIN 74', '60 MONTH WARRANTY', '11,250'),
+          ('Pro DIN 80', '60 MONTH WARRANTY', '11,850')
+        ] %}
+        {% for model, warranty, price in amaron_pro_4w %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Pro</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">High performance DIN series battery for passenger cars</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Premio Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-car-side me-2" style="color:#016BB2"></i>TATA GREEN Premio Series</h3>
+        <p class="text-muted">24-30 Month Warranty | Cars, MUVs, SUVs | Corrosion-resistant technology</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_premio = [
+          ('Premio 35B20R', '24 MONTH WARRANTY', '3,450'),
+          ('Premio 40B20R', '30 MONTH WARRANTY', '3,850'),
+          ('Premio 40B20L-BH', '30 MONTH WARRANTY', '3,850'),
+          ('Premio 50B24R', '30 MONTH WARRANTY', '4,650'),
+          ('Premio 55D23R', '30 MONTH WARRANTY', '5,150'),
+          ('Premio DIN65L', '30 MONTH WARRANTY', '6,250'),
+          ('Premio 65D31R', '30 MONTH WARRANTY', '6,450'),
+          ('Premio 80D26R', '30 MONTH WARRANTY', '7,850')
+        ] %}
+        {% for model, warranty, price in tata_premio %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">Premio</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Primary range for passenger vehicles with advanced corrosion-resistant plates</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Silver Plus Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-gem me-2" style="color:#016BB2"></i>TATA GREEN Silver Plus Series</h3>
+        <p class="text-muted">Advanced Automotive | Enhanced Corrosion Resistance | Superior Performance</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_silver = [
+          ('Silver Plus 40B20L-BH', '35 MONTH WARRANTY', '4,250'),
+          ('Silver Plus 50B24R', '36 MONTH WARRANTY', '5,150'),
+          ('Silver Plus 55D23R', '36 MONTH WARRANTY', '5,650'),
+          ('Silver Plus DIN65L', '36 MONTH WARRANTY', '6,850')
+        ] %}
+        {% for model, warranty, price in tata_silver %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">Silver Plus</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Advanced automotive batteries with corrosion-resistant alloy plates</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ========== HMV/LMV ========== -->
+    <div class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-truck-moving me-2 text-warning"></i>HMV / LMV</h2>
+      <p class="text-muted">Batteries for Trucks, Buses, Commercial & Heavy Vehicles</p>
+    </div>
+
+    <!-- EXIDE XPRESS Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-tachometer-alt me-2" style="color:#DA0011"></i>EXIDE XPRESS Series</h3>
+        <p class="text-muted">High performance batteries for commercial vehicles and trucks</p>
+      </div>
+      <div class="row g-4">
+        {% set xpress_batteries = [
+          ('XPRESS 700', '48 MONTH WARRANTY', '8,500'),
+          ('XPRESS 800', '48 MONTH WARRANTY', '9,500'),
+          ('XPRESS 900', '48 MONTH WARRANTY', '10,500'),
+          ('XPRESS 1000', '48 MONTH WARRANTY', '11,500'),
+          ('XPRESS 1200', '48 MONTH WARRANTY', '13,500'),
+          ('XPRESS 1350', '48 MONTH WARRANTY', '14,850')
+        ] %}
+        {% for model, warranty, price in xpress_batteries %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE XPRESS</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Designed for heavy-duty commercial applications</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Black Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-bolt me-2" style="color:#9AC93B"></i>AMARON Black Series</h3>
+        <p class="text-muted">Heavy Duty | Industrial grade batteries for commercial applications</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_black = [
+          ('Black 700', '24 MONTH WARRANTY', '7,850'),
+          ('Black 800', '24 MONTH WARRANTY', '8,850'),
+          ('Black 1000', '24 MONTH WARRANTY', '10,850'),
+          ('Black 1200', '24 MONTH WARRANTY', '12,850'),
+          ('Black 1500', '24 MONTH WARRANTY', '15,850'),
+          ('Black 1800', '24 MONTH WARRANTY', '18,850')
+        ] %}
+        {% for model, warranty, price in amaron_black %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Black</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Built for trucks, buses and heavy commercial vehicles</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Roadstar Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-truck me-2" style="color:#016BB2"></i>TATA GREEN Roadstar Series</h3>
+        <p class="text-muted">Commercial Vehicle Range | Heavy Duty | Trucks, Buses</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_roadstar = [
+          ('Roadstar 88E41R', '24 MONTH WARRANTY', '6,850'),
+          ('Roadstar 105E41CV', '24 MONTH WARRANTY', '7,850'),
+          ('Roadstar 120E41R', '24 MONTH WARRANTY', '8,850'),
+          ('Roadstar 135E41', '24 MONTH WARRANTY', '9,850'),
+          ('Roadstar 150E41R', '24 MONTH WARRANTY', '10,850'),
+          ('Roadstar 180E41R', '24 MONTH WARRANTY', '12,850')
+        ] %}
+        {% for model, warranty, price in tata_roadstar %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">Roadstar</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Built for commercial vehicles - high vibration resistance, long life</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN TG Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-truck-moving me-2" style="color:#016BB2"></i>TATA GREEN TG Series</h3>
+        <p class="text-muted">Utility & Commercial Vehicle Batteries | Heavy Duty Applications</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_tg = [
+          ('TG 700L', '24 MONTH WARRANTY', '7,450'),
+          ('TG 800L', '24 MONTH WARRANTY', '8,450'),
+          ('TG 900L', '24 MONTH WARRANTY', '9,450'),
+          ('TG 1000', '24 MONTH WARRANTY', '10,450'),
+          ('TG 1200', '24 MONTH WARRANTY', '12,450'),
+          ('TG 1500', '24 MONTH WARRANTY', '15,450')
+        ] %}
+        {% for model, warranty, price in tata_tg %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">TG Series</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Specific utility vehicle/commercial vehicle heavy-duty batteries</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ========== GENSETS ========== -->
+    <div class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-plug me-2 text-warning"></i>Gensets</h2>
+      <p class="text-muted">Batteries for Generators & Power Backup Systems</p>
+    </div>
+
+    <!-- AMARON Genset Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-bolt me-2" style="color:#9AC93B"></i>AMARON Genset Series</h3>
+        <p class="text-muted">Black | Fresh | Hi Way | 5 KVA to 625+ KVA</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_genset = [
+          ('BL700RMF', '18 MONTH WARRANTY', '5 KVA', '7,850'),
+          ('FR650RMF', '18 MONTH WARRANTY', '5 KVA', '6,850'),
+          ('BL900RMF', '18 MONTH WARRANTY', '10-30 KVA', '9,450'),
+          ('NT650H29R', '18+6 MONTH WARRANTY', '10-30 KVA', '8,850'),
+          ('BL1000RMF', '18 MONTH WARRANTY', '35-63 KVA', '10,450'),
+          ('NT700E41R', '18+6 MONTH WARRANTY', '35-63 KVA', '9,850'),
+          ('BL1300RMF', '18 MONTH WARRANTY', '75-125 KVA', '12,850'),
+          ('NT800F51R', '18+6 MONTH WARRANTY', '75-125 KVA', '11,450'),
+          ('NTX00D04R', '18+6 MONTH WARRANTY', '160-500 KVA', '13,850'),
+          ('HC180D04R', '18+6 MONTH WARRANTY', '500+ KVA', '15,850')
+        ] %}
+        {% for model, warranty, capacity, price in amaron_genset %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Genset</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">For {{ capacity }} gensets | KOEL, Mahindra, Cummins, Ashok Leyland compatible</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- EXIDE GENPLUS Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-plug me-2" style="color:#DA0011"></i>EXIDE GENPLUS Series</h3>
+        <p class="text-muted">Deep Cycle | Generator Batteries | Long Life</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_genplus = [
+          ('GP 65E41L', '24 MONTH WARRANTY', '5-10 KVA', '8,850'),
+          ('GP 80E41L', '24 MONTH WARRANTY', '15-20 KVA', '9,850'),
+          ('GP 100E41L', '24 MONTH WARRANTY', '25-40 KVA', '11,450'),
+          ('GP 120E41L', '24 MONTH WARRANTY', '50-80 KVA', '13,450'),
+          ('GP 150E41L', '24 MONTH WARRANTY', '100-150 KVA', '15,850'),
+          ('GP 180E41L', '24 MONTH WARRANTY', '200-500 KVA', '18,450')
+        ] %}
+        {% for model, warranty, capacity, price in exide_genplus %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE GENPLUS</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">For {{ capacity }} gensets | Deep cycle for reliable backup</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Genset Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-plug me-2" style="color:#016BB2"></i>TATA GREEN Genset Series</h3>
+        <p class="text-muted">Heavy Duty | Generator Batteries | 5 KVA to 500 KVA</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_genset = [
+          ('Genset 65E41L', '24 MONTH WARRANTY', '5-10 KVA', '8,450'),
+          ('Genset 80E41L', '24 MONTH WARRANTY', '15-30 KVA', '9,450'),
+          ('Genset 100E41L', '24 MONTH WARRANTY', '35-62 KVA', '10,950'),
+          ('Genset 120E41L', '24 MONTH WARRANTY', '75-125 KVA', '12,850'),
+          ('Genset 150E41L', '24 MONTH WARRANTY', '160-250 KVA', '15,450'),
+          ('Genset 180E41L', '24 MONTH WARRANTY', '320-500 KVA', '17,850')
+        ] %}
+        {% for model, warranty, capacity, price in tata_genset %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">TATA Genset</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">For {{ capacity }} gensets | Heavy duty tubular construction</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ========== INVERTER BATTERIES ========== -->
+    <div class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block"><i class="fas fa-home me-2 text-warning"></i>Inverter / Home UPS</h2>
+      <p class="text-muted">Power Backup Solutions for Home & Office</p>
+    </div>
+
+    <!-- EXIDE INVAMASTER Series -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-home me-2" style="color:#DA0011"></i>EXIDE INVAMASTER Series</h3>
+        <p class="text-muted">Reliable power backup solutions for home inverters</p>
+      </div>
+      <div class="row g-4">
+        {% set invamaster_batteries = [
+          ('IM 10000', '36 MONTH WARRANTY', '12,850'),
+          ('IM 15000', '36 MONTH WARRANTY', '15,450'),
+          ('IM 150TT', '36 MONTH WARRANTY', '16,850'),
+          ('IM 18000', '36 MONTH WARRANTY', '18,450'),
+          ('IM 20000', '36 MONTH WARRANTY', '20,850')
+        ] %}
+        {% for model, warranty, price in invamaster_batteries %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">EXIDE INVAMASTER</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Deep cycle battery for inverter and UPS applications</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Tubular Inverter Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-home me-2" style="color:#9AC93B"></i>AMARON Tubular Inverter Series</h3>
+        <p class="text-muted">Long-Lasting Power Backup | Tubular Technology</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_inverter = [
+          ('AM130ST36', '36 MONTH WARRANTY', '13,850'),
+          ('AM145ST36', '36 MONTH WARRANTY', '15,450'),
+          ('AM160ST36', '36 MONTH WARRANTY', '16,850'),
+          ('AM150TT42', '42 MONTH WARRANTY', '16,450'),
+          ('AR150TN54', '54 MONTH WARRANTY', '17,850'),
+          ('AM150TT54', '54 MONTH WARRANTY', '18,450'),
+          ('AR150TT54', '54 MONTH WARRANTY', '19,450'),
+          ('AM180TT54', '54 MONTH WARRANTY', '20,850'),
+          ('AR200TT54', '54 MONTH WARRANTY', '22,450'),
+          ('AM200TT54', '54 MONTH WARRANTY', '21,850')
+        ] %}
+        {% for model, warranty, price in amaron_inverter %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">AMARON Tubular</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Deep cycle tubular battery for home inverter/UPS applications</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- TATA GREEN Inverter Series -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#016BB2"><i class="fas fa-home me-2" style="color:#016BB2"></i>TATA GREEN Inverter/Home UPS Series</h3>
+        <p class="text-muted">Tubular & Flat Plate | Deep Cycle | Long Power Backup</p>
+      </div>
+      <div class="row g-4">
+        {% set tata_inverter = [
+          ('Inverter TT 10000', '36 MONTH WARRANTY', '11,450'),
+          ('Inverter TT 12000', '36 MONTH WARRANTY', '13,850'),
+          ('Inverter TT 15000', '36 MONTH WARRANTY', '16,450'),
+          ('Inverter TT 180TT', '36 MONTH WARRANTY', '19,850'),
+          ('Inverter TT 20000', '36 MONTH WARRANTY', '21,850')
+        ] %}
+        {% for model, warranty, price in tata_inverter %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+            <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">Inverter Tubular</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">({{ model }})</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Deep cycle tubular battery for home inverter/UPS applications</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,558 @@
+{% extends "base.html" %}
+{% block title %}Spare Parts | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item active">Spare Parts</li></ol></nav>
+    <h1 class="mt-2"><i class="fas fa-cog text-warning me-2"></i>Spare Parts Catalog</h1>
+    <p class="text-muted">Genuine parts from Bosch, Lucas TVS, Autolek, Spark Minda &amp; Comstar</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar" data-aos="fade-up">
+      <form method="GET" action="/products" class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label text-muted small">Search Parts</label>
+          <div class="search-wrapper">
+            <input type="text" name="q" id="productSearch" class="form-control" placeholder="Part name or number..." value="{{ filters.q or '' }}">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small">Brand</label>
+          <select name="brand" class="form-select">
+            <option value="">All Brands</option>
+            {% for b in brands %}<option value="{{ b.id }}" {% if filters.brand == b.id|string %}selected{% endif %}>{{ b.name }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label text-muted small">Vehicle Type</label>
+          <select name="vehicle" class="form-select">
+            <option value="">All Vehicles</option>
+            <option value="2-wheeler" {% if filters.vehicle=='2-wheeler' %}selected{% endif %}>2 Wheeler</option>
+            <option value="3-wheeler" {% if filters.vehicle=='3-wheeler' %}selected{% endif %}>3 Wheeler</option>
+            <option value="4-wheeler" {% if filters.vehicle=='4-wheeler' %}selected{% endif %}>4 Wheeler</option>
+            <option value="lightweight" {% if filters.vehicle=='lightweight' %}selected{% endif %}>Light Weight Vehicle</option>
+            <option value="heavy" {% if filters.vehicle=='heavy' %}selected{% endif %}>Heavy Vehicle</option>
+            <option value="genset" {% if filters.vehicle=='genset' %}selected{% endif %}>Genset</option>
+            <option value="universal" {% if filters.vehicle=='universal' %}selected{% endif %}>Universal</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label text-muted small">Category</label>
+          <select name="category" class="form-select">
+            <option value="">All Categories</option>
+            {% for c in categories %}<option value="{{ c.id }}" {% if filters.category == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-1 d-flex gap-2">
+          <button type="submit" class="btn-primary-custom w-100" style="padding:10px"><i class="fas fa-search"></i></button>
+          <a href="/products" class="btn-outline-custom" style="padding:10px"><i class="fas fa-times"></i></a>
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <p class="text-muted mb-0"><span class="text-warning fw-bold">{{ products|length }}</span> parts found</p>
+      <div class="live-dot me-1"></div><small class="text-muted">Live inventory</small>
+    </div>
+
+    <!-- Lucas TVS Product Categories -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-tools me-2 text-warning"></i>Lucas TVS Product Categories
+      </h4>
+      <p class="text-muted">Genuine Lucas TVS starter motors, alternators, wiping systems and ignition parts</p>
+    </div>
+    <div class="row g-3 mb-5">
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">LUCAS TVS</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Category Code: ST-001</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">Starter Motors & Spares</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">Drive assemblies, Bendix, armatures</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: From ₹1,250</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">From ₹850</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">LUCAS TVS</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Category Code: ALT-002</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">Alternators & Components</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">Stators, rectifiers, rotors, components</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: From ₹2,450</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">From ₹1,850</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">LUCAS TVS</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Category Code: WP-003</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">Wiping Systems</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">Wiper motors 12V/24V, linkage kits</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: From ₹950</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">From ₹650</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">LUCAS TVS</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Category Code: IGN-004</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">Ignition & Electrical</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">Distributors, ignition, horn 12V</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: From ₹450</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">From ₹350</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bosch Starter Motors Section -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-car-battery me-2 text-warning"></i>Bosch Starter Motors - Complete Catalog
+      </h4>
+      <p class="text-muted">Genuine Bosch starter motors with MRP for cars, SUVs, trucks and commercial vehicles</p>
+    </div>
+
+    <!-- 4-Wheeler Starters -->
+    <div class="section-header mb-3">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Passenger Car Starter Motors</h5>
+    </div>
+    <div class="row g-3 mb-4">
+      {% set bosch_car_starters = [
+        ('0 001 107 016', 'Maruti 800, Omni', '0.8 kW', '₹3,850', '₹5,450'),
+        ('0 001 107 018', 'Maruti Alto, WagonR', '0.9 kW', '₹4,150', '₹5,850'),
+        ('0 001 107 025', 'Maruti Swift, Dzire', '1.1 kW', '₹4,650', '₹6,550'),
+        ('0 001 108 028', 'Hyundai i10, i20', '0.9 kW', '₹4,450', '₹6,250'),
+        ('0 001 108 035', 'Hyundai Santro, Getz', '0.9 kW', '₹4,350', '₹6,150'),
+        ('0 001 109 042', 'Honda City, Civic', '1.2 kW', '₹5,850', '₹8,250'),
+        ('0 001 109 055', 'Honda Amaze, Jazz', '1.0 kW', '₹5,450', '₹7,650'),
+        ('0 001 110 062', 'Toyota Corolla, Innova', '1.4 kW', '₹6,450', '₹9,150'),
+        ('0 001 110 078', 'Toyota Etios, Liva', '1.1 kW', '₹5,750', '₹8,150'),
+        ('0 001 111 085', 'Tata Indica, Indigo', '1.2 kW', '₹4,950', '₹6,950'),
+        ('0 001 111 092', 'Tata Tiago, Tigor', '1.1 kW', '₹4,750', '₹6,750'),
+        ('0 001 112 108', 'Mahindra Scorpio, Xylo', '2.2 kW', '₹7,450', '₹10,550'),
+        ('0 001 112 115', 'Mahindra Bolero, Thar', '2.0 kW', '₹6,950', '₹9,850'),
+        ('0 001 113 122', 'Ford Figo, Aspire', '1.2 kW', '₹5,650', '₹7,950'),
+        ('0 001 113 139', 'Ford EcoSport, Endeavour', '1.5 kW', '₹6,850', '₹9,650'),
+        ('0 001 114 146', 'Chevrolet Beat, Spark', '1.0 kW', '₹4,550', '₹6,450'),
+        ('0 001 114 153', 'Chevrolet Cruze, Tavera', '1.6 kW', '₹6,450', '₹9,150'),
+        ('0 001 115 167', 'Volkswagen Polo, Vento', '1.2 kW', '₹6,250', '₹8,850'),
+        ('0 001 115 174', 'Volkswagen Jetta, Passat', '1.6 kW', '₹7,850', '₹11,150'),
+        ('0 001 116 181', 'Skoda Rapid, Fabia', '1.2 kW', '₹6,350', '₹8,950'),
+        ('0 001 116 198', 'Skoda Octavia, Superb', '1.8 kW', '₹8,450', '₹11,950'),
+        ('0 001 117 205', 'Renault Kwid, Duster', '1.0 kW', '₹4,850', '₹6,850'),
+        ('0 001 117 212', 'Renault Lodgy, Captur', '1.5 kW', '₹6,150', '₹8,750'),
+        ('0 001 118 229', 'Nissan Micra, Sunny', '1.1 kW', '₹5,250', '₹7,450'),
+        ('0 001 118 236', 'Nissan Terrano, Kicks', '1.5 kW', '₹6,450', '₹9,150')
+      ] %}
+      {% for part_no, vehicle, power, price, mrp in bosch_car_starters %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH GENUINE</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ vehicle }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ power }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+            <div style="font-size:10px;color:var(--green);">Save {{ ((mrp[1:]|replace(',', '')|int - price[1:]|replace(',', '')|int) / (mrp[1:]|replace(',', '')|int) * 100)|round|int }}%</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Commercial Vehicle Starters -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Commercial Vehicle & Heavy Duty Starter Motors</h5>
+    </div>
+    <div class="row g-3 mb-5">
+      {% set bosch_cv_starters = [
+        ('0 001 231 001', 'Tata Ace, Magic', '12V / 1.2 kW', '₹5,450', '₹7,750'),
+        ('0 001 231 018', 'Tata 407, 709', '12V / 2.5 kW', '₹8,450', '₹11,950'),
+        ('0 001 231 025', 'Tata 1109, 1512', '12V / 3.2 kW', '₹11,450', '₹16,250'),
+        ('0 001 231 032', 'Tata 1613, 1616', '12V / 4.5 kW', '₹14,450', '₹20,450'),
+        ('0 001 232 049', 'Ashok Leyland Dost', '12V / 2.2 kW', '₹7,850', '₹11,150'),
+        ('0 001 232 056', 'Ashok Leyland 1616', '12V / 3.5 kW', '₹12,450', '₹17,650'),
+        ('0 001 232 063', 'Ashok Leyland 2516', '12V / 4.8 kW', '₹15,450', '₹21,950'),
+        ('0 001 232 070', 'Ashok Leyland 3123', '12V / 5.5 kW', '₹18,450', '₹26,150'),
+        ('0 001 233 087', 'Eicher 10.50, 11.10', '12V / 2.8 kW', '₹9,450', '₹13,450'),
+        ('0 001 233 094', 'Eicher 20.15, 30.25', '12V / 4.2 kW', '₹13,450', '₹19,050'),
+        ('0 001 233 101', 'Mahindra DI 3200', '12V / 2.5 kW', '₹8,450', '₹11,950'),
+        ('0 001 234 118', 'Mahindra Furio', '12V / 3.8 kW', '₹12,950', '₹18,350'),
+        ('0 001 234 125', 'BharatBenz 914, 1214', '12V / 3.2 kW', '₹13,450', '₹19,050'),
+        ('0 001 234 132', 'BharatBenz 1623, 2523', '12V / 5.2 kW', '₹16,450', '₹23,350'),
+        ('0 001 235 149', 'Volvo FM 380, 420', '24V / 5.5 kW', '₹24,450', '₹34,650'),
+        ('0 001 235 156', 'Volvo FH 460, 500', '24V / 6.5 kW', '₹28,450', '₹40,350'),
+        ('0 001 236 163', 'Scania G400, R500', '24V / 6.0 kW', '₹26,450', '₹37,450'),
+        ('0 001 236 170', 'AMW 2518, 3118', '12V / 4.5 kW', '₹14,450', '₹20,450')
+      ] %}
+      {% for part_no, vehicle, power, price, mrp in bosch_cv_starters %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH GENUINE</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ vehicle }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ power }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+            <div style="font-size:10px;color:var(--green);">Save {{ ((mrp[1:]|replace(',', '')|int - price[1:]|replace(',', '')|int) / (mrp[1:]|replace(',', '')|int) * 100)|round|int }}%</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Bosch Electric Parts Section -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-toggle-on me-2 text-warning"></i>Bosch Electric Parts - Switches & Relays
+      </h4>
+      <p class="text-muted">Genuine Bosch electrical switches and relay systems for all vehicles</p>
+    </div>
+
+    <!-- Switches -->
+    <div class="section-header mb-3">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Electrical & Mechanical Switches</h5>
+    </div>
+    <div class="row g-3 mb-4">
+      {% set bosch_switches = [
+        ('0 343 401 001', 'Ignition Switch Universal', '12V / 5 Pin', '₹450', '₹650'),
+        ('0 343 401 018', 'Ignition Switch Maruti', 'For Alto, WagonR, Swift', '₹550', '₹850'),
+        ('0 343 401 025', 'Ignition Switch Hyundai', 'For i10, i20, Santro', '₹650', '₹950'),
+        ('0 343 401 032', 'Ignition Switch Tata', 'For Indica, Indigo, Tiago', '₹550', '₹850'),
+        ('0 343 402 049', 'Headlight Switch', '12V / Universal type', '₹350', '₹550'),
+        ('0 343 402 056', 'Headlight Dipper Switch', 'High/Low beam control', '₹450', '₹650'),
+        ('0 343 403 063', 'Horn Switch', '12V / Universal', '₹150', '₹250'),
+        ('0 343 403 070', 'Combination Switch Left', 'Indicator, wiper, light', '₹850', '₹1,250'),
+        ('0 343 404 087', 'Combination Switch Right', 'Wiper, washer control', '₹850', '₹1,250'),
+        ('0 343 404 094', 'Stop Light Switch', 'Brake pedal switch', '₹250', '₹350'),
+        ('0 343 405 101', 'Reverse Light Switch', 'Gear indicator switch', '₹350', '₹550'),
+        ('0 343 405 118', 'Door Switch Set', '4 door switches', '₹450', '₹650')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_switches %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH SWITCH</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Relays -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Automotive Relays</h5>
+    </div>
+    <div class="row g-3 mb-5">
+      {% set bosch_relays = [
+        ('0 332 002 001', 'Micro Relay 12V 20A', '4 Pin / Standard', '₹150', '₹250'),
+        ('0 332 002 018', 'Micro Relay 12V 25A', '5 Pin / Changeover', '₹180', '₹280'),
+        ('0 332 003 025', 'Mini Relay 12V 30A', '4 Pin / Heavy duty', '₹250', '₹350'),
+        ('0 332 003 032', 'Mini Relay 12V 40A', '5 Pin / Power', '₹350', '₹550'),
+        ('0 332 004 049', 'Power Relay 12V 70A', '4 Pin / High current', '₹550', '₹850'),
+        ('0 332 004 056', 'Power Relay 24V 50A', '4 Pin / Truck', '₹650', '₹950'),
+        ('0 332 005 063', 'Power Relay 24V 100A', 'Heavy duty truck', '₹950', '₹1,450'),
+        ('0 332 006 070', 'Glow Plug Relay', 'Diesel engine relay', '₹850', '₹1,250'),
+        ('0 332 007 087', 'Horn Relay 12V', 'Dual horn relay', '₹250', '₹350'),
+        ('0 332 008 094', 'Headlight Relay', 'High/Low beam relay', '₹350', '₹550'),
+        ('0 332 009 101', 'Starter Relay 12V', 'High current relay', '₹550', '₹850'),
+        ('0 332 010 118', 'Battery Cut-off Relay', 'Emergency cut-off', '₹1,450', '₹2,150')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_relays %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH RELAY</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Bosch Sensors Section -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-microchip me-2 text-warning"></i>Bosch Sensors - Complete Range
+      </h4>
+      <p class="text-muted">Highly accurate sensors for engine management and vehicle systems</p>
+    </div>
+
+    <!-- Engine Sensors -->
+    <div class="section-header mb-3">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Engine & Performance Sensors</h5>
+    </div>
+    <div class="row g-3 mb-4">
+      {% set bosch_engine_sensors = [
+        ('0 261 210 001', 'Oxygen Sensor (O2)', 'Universal 4-wire', '₹1,450', '₹2,150'),
+        ('0 261 210 018', 'Oxygen Sensor Maruti', 'Alto, WagonR, Swift', '₹1,250', '₹1,850'),
+        ('0 261 210 025', 'Oxygen Sensor Hyundai', 'i10, i20, Verna', '₹1,850', '₹2,750'),
+        ('0 261 211 032', 'Camshaft Position Sensor', 'Hall effect type', '₹1,650', '₹2,450'),
+        ('0 261 211 049', 'Crankshaft Position Sensor', 'Inductive type', '₹1,450', '₹2,150'),
+        ('0 261 212 056', 'Knock Sensor', 'Piezoelectric type', '₹1,250', '₹1,850'),
+        ('0 261 213 063', 'Air Mass Flow Sensor', 'Hot film type', '₹3,450', '₹4,950'),
+        ('0 261 213 070', 'MAP Sensor', 'Manifold pressure', '₹950', '₹1,450'),
+        ('0 261 214 087', 'Throttle Position Sensor', 'Potentiometer type', '₹1,150', '₹1,750'),
+        ('0 261 214 094', 'Boost Pressure Sensor', 'Turbo applications', '₹1,450', '₹2,150'),
+        ('0 261 215 101', 'Oil Pressure Sensor', 'For all engines', '₹850', '₹1,250'),
+        ('0 261 215 118', 'Fuel Pressure Sensor', 'Common rail diesel', '₹1,850', '₹2,750')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_engine_sensors %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH SENSOR</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Temperature & Pressure Sensors -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Temperature, Pressure & Emission Sensors</h5>
+    </div>
+    <div class="row g-3 mb-4">
+      {% set bosch_temp_sensors = [
+        ('0 261 230 001', 'Coolant Temperature Sensor', 'For all cars', '₹450', '₹650'),
+        ('0 261 230 018', 'Intake Air Temp Sensor', 'IAT sensor', '₹550', '₹850'),
+        ('0 261 231 025', 'Exhaust Gas Temp Sensor', 'EGT sensor', '₹1,450', '₹2,150'),
+        ('0 261 231 032', 'Ambient Temp Sensor', 'Outside temperature', '₹650', '₹950'),
+        ('0 261 232 049', 'NOx Sensor', 'Nitrogen oxide sensor', '₹12,450', '₹18,650'),
+        ('0 261 233 056', 'Particulate Matter Sensor', 'DPF sensor', '₹8,450', '₹12,650'),
+        ('0 261 234 063', 'Differential Pressure Sensor', 'DPF pressure', '₹2,450', '₹3,650'),
+        ('0 261 235 070', 'ABS Wheel Speed Sensor', 'Front/Rear universal', '₹1,250', '₹1,850')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_temp_sensors %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH SENSOR</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- TPMS Sensors -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Tyre Pressure Monitoring System (TPMS)</h5>
+    </div>
+    <div class="row g-3 mb-5">
+      {% set bosch_tpms = [
+        ('F 026 B01 001', 'TPMS Sensor 2-Wheeler', 'Bluetooth LE enabled', '₹1,850', '₹2,750'),
+        ('F 026 B01 018', 'TPMS Sensor 4-Wheeler', 'Car/Bike universal', '₹2,450', '₹3,650'),
+        ('F 026 B01 025', 'TPMS Display Unit', 'Digital display', '₹1,450', '₹2,150'),
+        ('F 026 B01 032', 'TPMS Complete Kit 2W', '2 sensors + display', '₹3,450', '₹4,950'),
+        ('F 026 B01 049', 'TPMS Complete Kit 4W', '4 sensors + display', '₹5,950', '₹8,850')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_tpms %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH TPMS</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Bosch Wiper Blades Section -->
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-wind me-2 text-warning"></i>Bosch Wiper Blades - Aerotwin & Conventional
+      </h4>
+      <p class="text-muted">Premium wiper blades for clear visibility in all weather conditions</p>
+    </div>
+
+    <!-- Aerotwin Flat Blades -->
+    <div class="section-header mb-3">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Aerotwin Flat Wiper Blades</h5>
+    </div>
+    <div class="row g-3 mb-4">
+      {% set bosch_aerotwin = [
+        ('3 397 001 001', 'Aerotwin 16" (400mm)', 'Universal flat blade', '₹450', '₹650'),
+        ('3 397 001 018', 'Aerotwin 17" (425mm)', 'Universal flat blade', '₹480', '₹700'),
+        ('3 397 001 025', 'Aerotwin 18" (450mm)', 'Universal flat blade', '₹500', '₹750'),
+        ('3 397 001 032', 'Aerotwin 19" (475mm)', 'Universal flat blade', '₹520', '₹780'),
+        ('3 397 001 049', 'Aerotwin 20" (500mm)', 'Universal flat blade', '₹550', '₹820'),
+        ('3 397 001 056', 'Aerotwin 21" (530mm)', 'Universal flat blade', '₹580', '₹850'),
+        ('3 397 001 063', 'Aerotwin 22" (550mm)', 'Universal flat blade', '₹600', '₹900'),
+        ('3 397 001 070', 'Aerotwin 24" (600mm)', 'Universal flat blade', '₹650', '₹950'),
+        ('3 397 001 087', 'Aerotwin 26" (650mm)', 'Universal flat blade', '₹700', '₹1,050'),
+        ('3 397 001 094', 'Aerotwin 28" (700mm)', 'Universal flat blade', '₹750', '₹1,100')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_aerotwin %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">AEROTWIN</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Conventional Wiper Blades -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Conventional & Rear Wiper Blades</h5>
+    </div>
+    <div class="row g-3 mb-5">
+      {% set bosch_conventional = [
+        ('3 397 002 001', 'Economy 14" (350mm)', 'Standard metal frame', '₹250', '₹350'),
+        ('3 397 002 018', 'Economy 16" (400mm)', 'Standard metal frame', '₹280', '₹400'),
+        ('3 397 002 025', 'Economy 18" (450mm)', 'Standard metal frame', '₹300', '₹450'),
+        ('3 397 002 032', 'Economy 20" (500mm)', 'Standard metal frame', '₹320', '₹480'),
+        ('3 397 002 049', 'Twin Spoiler 16"', 'Aerodynamic design', '₹350', '₹500'),
+        ('3 397 002 056', 'Twin Spoiler 18"', 'Aerodynamic design', '₹380', '₹550'),
+        ('3 397 002 063', 'Twin Spoiler 20"', 'Aerodynamic design', '₹400', '₹600'),
+        ('3 397 002 070', 'Twin Spoiler 22"', 'Aerodynamic design', '₹420', '₹650'),
+        ('3 397 002 087', 'Rear Wiper 10"', 'Hatchback/SUV rear', '₹320', '₹450'),
+        ('3 397 002 094', 'Rear Wiper 11"', 'Hatchback/SUV rear', '₹340', '₹480'),
+        ('3 397 002 101', 'Rear Wiper 12"', 'Hatchback/SUV rear', '₹360', '₹520'),
+        ('3 397 002 118', 'Rear Wiper 14"', 'Hatchback/SUV rear', '₹380', '₹550')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_conventional %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH WIPER</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Wiper Systems - Motors & Linkages -->
+    <div class="section-header mb-3 mt-5">
+      <h5 style="font-family:var(--font-display);font-weight:600;color:var(--text-dark);">Bosch Wiper Motors & Linkage Systems</h5>
+    </div>
+    <div class="row g-3 mb-5">
+      {% set bosch_wiper_systems = [
+        ('0 390 201 001', 'Wiper Motor 12V Standard', '1 Speed motor', '₹1,850', '₹2,750'),
+        ('0 390 201 018', 'Wiper Motor 12V 2-Speed', 'Hi/Lo speed motor', '₹2,450', '₹3,650'),
+        ('0 390 201 025', 'Wiper Motor 24V Truck', 'Commercial vehicle', '₹3,450', '₹4,950'),
+        ('0 390 202 032', 'Wiper Linkage Kit', 'Front wiper linkage', '₹850', '₹1,250'),
+        ('0 390 202 049', 'Wiper Linkage Commercial', 'Truck/Bus linkage', '₹1,450', '₹2,150'),
+        ('0 390 203 056', 'Wiper Switch Stalk', 'Column mounted', '₹650', '₹950'),
+        ('0 390 203 063', 'Washer Pump 12V', 'Windshield washer', '₹350', '₹550'),
+        ('0 390 204 070', 'Washer Nozzle Set', 'Adjustable nozzles', '₹150', '₹250')
+      ] %}
+      {% for part_no, name, specs, price, mrp in bosch_wiper_systems %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid #0095D9">
+          <div class="battery-brand-badge" style="background:#0095D9;color:white;font-size:10px;padding:2px 8px">BOSCH WIPER</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ part_no }}</div>
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ name }}</h6>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2">
+            <div style="font-size:11px;color:var(--text-muted);text-decoration:line-through">MRP: {{ mrp }}</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:#0095D9">{{ price }}</div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#0095D9;color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if products %}
+    <div class="vehicle-category-header mb-4 mt-5">
+      <h4 style="font-family:var(--font-display);font-weight:700;color:var(--primary);">
+        <i class="fas fa-box-open me-2 text-warning"></i>Available Spare Parts
+      </h4>
+      <p class="text-muted">Genuine parts from Bosch, Lucas TVS, Autolek, Spark Minda & Comstar</p>
+    </div>
+    <div class="row g-3">
+      {% for p in products %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="battery-card h-100" style="padding:15px;border-top:3px solid var(--primary)">
+          {% if p.brand_name %}<div class="battery-brand-badge" style="background:var(--primary);color:white;font-size:10px;padding:2px 8px">{{ p.brand_name }}</div>{% endif %}
+          {% if p.part_number %}<div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:6px">Part# {{ p.part_number }}</div>{% endif %}
+          <h6 style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-top:6px;color:var(--text-dark)">{{ p.name }}</h6>
+          {% if p.category_name %}<div style="font-size:12px;color:var(--text-light);font-weight:600">{{ p.category_name }}</div>{% endif %}
+          <div class="mt-2">
+            {% if p.price %}<div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--primary)">&#x20B9;{{ "%.0f"|format(p.price) }}</div>{% else %}<div style="font-size:14px;color:var(--primary);font-weight:600">Call for price</div>{% endif %}
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px">
+              {% if p.stock_quantity > 5 %}<span style="color:var(--green)"><i class="fas fa-circle me-1" style="font-size:6px"></i>In Stock</span>
+              {% elif p.stock_quantity > 0 %}<span style="color:#FFA000"><i class="fas fa-circle me-1" style="font-size:6px"></i>Low Stock</span>
+              {% else %}<span style="color:var(--red)"><i class="fas fa-circle me-1" style="font-size:6px"></i>Out of Stock</span>{% endif %}
+            </div>
+          </div>
+          <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:var(--primary);color:white;font-family:var(--font-display);font-weight:700;padding:6px 10px;font-size:11px"><i class="fas fa-phone me-1"></i>Call for Order</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5" data-aos="fade-up">
+      <i class="fas fa-search fa-3x text-muted mb-3"></i>
+      <h4 style="font-family:var(--font-display)">No parts found</h4>
+      <p class="text-muted">Try different search terms or <a href="/contact" class="text-warning">contact us</a> for custom orders.</p>
+      <a href="/products" class="btn-primary-custom mt-2">Clear Filters</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

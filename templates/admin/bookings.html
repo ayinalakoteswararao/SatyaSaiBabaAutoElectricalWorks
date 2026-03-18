@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% block title %}Bookings{% endblock %}
+{% block page_title %}Service Bookings{% endblock %}
+{% block content %}
+<div class="d-flex gap-2 mb-4 flex-wrap">
+  {% for s in ['','pending','confirmed','in-progress','completed','cancelled'] %}
+  <a href="/admin/bookings{% if s %}?status={{ s }}{% endif %}" class="badge text-decoration-none px-3 py-2 {% if status_filter==s %}bg-warning text-dark{% else %}'' {% endif %}" style="{% if status_filter!=s %}background:var(--dark-4);color:var(--text-light);border:1px solid var(--border){% endif %};font-family:var(--font-display);font-size:13px">
+    {{ s.replace('-',' ').title() if s else 'All' }}
+  </a>
+  {% endfor %}
+</div>
+<div class="card-dark">
+  <div class="table-responsive">
+    <table class="admin-table">
+      <thead><tr><th>#</th><th>Customer</th><th>Service</th><th>Vehicle</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for b in bookings %}
+        <tr>
+          <td class="text-mono text-muted">#{{ b.id }}</td>
+          <td><div style="font-weight:600">{{ b.customer_name }}</div><div class="text-muted" style="font-size:12px">{{ b.phone }}</div></td>
+          <td style="font-size:13px">{{ b.service_name or 'General Service' }}</td>
+          <td><div style="font-size:13px">{{ b.vehicle_type }}</div><div class="text-mono text-muted" style="font-size:11px">{{ b.vehicle_number or '' }}</div></td>
+          <td style="font-family:var(--font-mono);font-size:13px;color:var(--yellow)">{{ b.booking_date }}</td>
+          <td><span class="status-badge badge-{{ b.status }}">{{ b.status.replace('-',' ').title() }}</span></td>
+          <td><button class="btn btn-sm btn-outline-warning" data-booking-id="{{ b.id }}" data-status="{{ b.status }}" data-notes="{{ b.notes or '' }}" data-customer="{{ b.customer_name }}" data-date="{{ b.booking_date }}" data-vehicle="{{ b.vehicle_type }}" onclick="manageBooking(this)">Manage</button></td>
+        </tr>
+        {% else %}<tr><td colspan="7" class="text-center text-muted py-4">No bookings found</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" id="manageModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" style="font-family:var(--font-display)">Update Booking</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <form method="POST" id="manageForm" class="form-dark">
+      <div class="modal-body">
+        <div id="bookingInfo" class="card-dark mb-3" style="font-size:13px"></div>
+        <div class="mb-3"><label class="form-label">Update Status</label>
+          <select name="status" id="manage_status" class="form-select">
+            <option value="pending">Pending</option><option value="confirmed">Confirmed</option>
+            <option value="in-progress">In Progress</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div><label class="form-label">Notes</label><textarea name="notes" id="manage_notes" class="form-control" rows="3" placeholder="Add notes for this booking..."></textarea></div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn-primary-custom">Update</button></div>
+    </form>
+  </div></div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function manageBooking(btn) {
+  const b = {
+    id: btn.dataset.bookingId,
+    status: btn.dataset.status,
+    notes: btn.dataset.notes,
+    customer_name: btn.dataset.customer,
+    booking_date: btn.dataset.date,
+    vehicle_type: btn.dataset.vehicle
+  };
+  document.getElementById('manageForm').action = '/admin/bookings/update/' + b.id;
+  document.getElementById('manage_status').value = b.status;
+  document.getElementById('manage_notes').value = b.notes || '';
+  document.getElementById('bookingInfo').innerHTML = `<strong>Booking #${b.id}</strong><br><small class="text-muted">Customer: ${b.customer_name} | Date: ${b.booking_date} | Vehicle: ${b.vehicle_type}</small>`;
+  new bootstrap.Modal(document.getElementById('manageModal')).show();
+}
+</script>
+{% endblock %}

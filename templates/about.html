@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}About Us | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <h1 class="mt-2"><i class="fas fa-store me-2" style="color:var(--primary)"></i>About Us</h1>
+    <p class="text-muted">Your trusted auto electrical specialists since 2001</p>
+  </div>
+</div>
+
+<!-- Our Story Section -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="row g-5 align-items-center mb-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="section-tag">Our Story</span>
+        <h2 class="section-title mt-2">20+ Years of <span class="accent">Excellence</span></h2>
+        <p class="text-muted mt-3">Satya Sai Baba Auto Electrical Works was founded in 2001 with a simple vision: to provide honest, expert auto electrical services to the people of Gudivada, Krishna District, Andhra Pradesh. What started as a small roadside workshop has grown into a fully equipped, Bosch Authorized service center.</p>
+        <p class="text-muted mt-3">We specialize in all aspects of automotive electrical systems — from starter motors and alternators to complete vehicle rewiring and modern diagnostics. Our team of certified technicians brings decades of combined experience to every job.</p>
+        <div class="row g-3 mt-4">
+          <div class="col-6">
+            <div class="card-dark text-center py-4" style="border-top:3px solid var(--primary)">
+              <div style="font-family:var(--font-display);font-size:36px;font-weight:800;color:var(--primary)">20+</div>
+              <div class="text-muted small">Years Experience</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card-dark text-center py-4" style="border-top:3px solid var(--primary)">
+              <div style="font-family:var(--font-display);font-size:36px;font-weight:800;color:var(--primary)">5000+</div>
+              <div class="text-muted small">Happy Customers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div style="background:linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%);border:2px solid var(--primary);border-radius:var(--radius-lg);padding:40px;text-align:center">
+          <div style="width:120px;height:120px;background:rgba(37,99,235,0.1);border:2px solid rgba(37,99,235,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:52px;color:var(--primary)"><i class="fas fa-bolt"></i></div>
+          <h3 style="font-family:var(--font-display);font-size:24px;color:var(--text-dark)">Satya Sai Baba<br>Auto Electrical Works</h3>
+          <p class="text-muted mt-2 small">Gudivada, Krishna District, Andhra Pradesh</p>
+          <div class="mt-4"><span class="badge px-3 py-2" style="font-family:var(--font-display);font-size:13px;background:var(--primary);color:white"><i class="fas fa-certificate me-1"></i>Authorized Bosch Workshop</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Categories -->
+    <div class="section-header mt-5" data-aos="fade-up">
+      <h2 class="section-title">Vehicle <span class="accent">Categories</span> We Service</h2>
+      <div class="divider-yellow"></div>
+    </div>
+    <div class="row g-3 mb-5" data-aos="fade-up">
+      {% for icon,title,desc in [('fa-motorcycle','2 Wheelers','Bikes, scooters'),('fa-taxi','3 Wheelers','Auto rickshaws'),('fa-car','4 Wheelers','Cars, SUVs'),('fa-shuttle-van','Light Vehicles','Vans, small trucks , Tata Ace , Bada Dost'),('fa-truck','Heavy Vehicles','Trucks, buses, trailers'),('fa-bolt','Generator Sets','Industrial & home gensets')] %}
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="card-dark text-center py-4 h-100" style="border-top:3px solid var(--primary)">
+          <i class="fas {{ icon }} fa-2x" style="color:var(--primary);margin-bottom:12px"></i>
+          <div style="font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--text-dark)">{{ title }}</div>
+          <div class="text-muted" style="font-size:12px;margin-top:4px">{{ desc }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="section">
+  <div class="container">
+    <div class="section-header mb-5" data-aos="fade-up">
+      <h2 class="section-title">Why Choose <span class="accent">Us</span></h2>
+      <p class="section-desc mt-3">Excellence, reliability, and expertise that you can trust</p>
+      <div class="divider-yellow"></div>
+    </div>
+
+    <div class="row g-4">
+      {% for icon, title, desc in [
+        ('fa-tools', 'Expert Technicians', 'Certified technicians with 20+ years of combined automotive electrical experience'),
+        ('fa-certificate', 'Bosch Authorized', 'Official Bosch authorized service center with latest diagnostic equipment'),
+        ('fa-wrench', 'Complete Solutions', 'From minor repairs to complete electrical system overhauls & rewiring'),
+        ('fa-hourglass-end', 'Quick Turnaround', 'Efficient service without compromising quality - most jobs completed same day'),
+        ('fa-tag', 'Competitive Pricing', 'Transparent pricing with no hidden charges - get a quote before we start'),
+        ('fa-shield-alt', 'Warranty Coverage', 'All repairs backed by warranty for your peace of mind')
+      ] %}
+      <div class="col-lg-6" data-aos="fade-up">
+        <div class="card-dark p-4" style="border-left:4px solid var(--primary)">
+          <div style="display:flex;gap:16px;align-items:flex-start">
+            <div style="width:48px;height:48px;background:rgba(37,99,235,0.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <i class="fas {{ icon }}" style="font-size:24px;color:var(--primary)"></i>
+            </div>
+            <div style="flex:1">
+              <h5 style="font-family:var(--font-display);font-weight:700;color:var(--text-dark);margin-bottom:8px">{{ title }}</h5>
+              <p class="text-muted" style="font-size:14px;margin:0">{{ desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="section section-dark">
+  <div class="container" data-aos="fade-up">
+    <div class="cta-banner">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:800"><i class="fas fa-bolt text-warning me-2"></i>Experience Expert Auto Electrical Care</h3>
+          <p class="text-muted mb-0 mt-2">Trust Satya Sai Baba with your vehicle's electrical needs. Get a free diagnostic assessment and professional service.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <div class="d-flex flex-nowrap gap-2 justify-content-lg-end">
+            <a href="/contact" class="btn-primary-custom" style="padding:8px 16px;font-size:13px"><i class="fas fa-paper-plane"></i> Get Free Diagnosis</a>
+            <a href="tel:+919959592564" class="btn-outline-custom" style="padding:8px 16px;font-size:13px"><i class="fas fa-phone"></i> Call Us Today</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

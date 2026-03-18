@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Services | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item active">Services</li></ol></nav>
+    <h1 class="mt-2"><i class="fas fa-tools text-warning me-2"></i>Our Services</h1>
+    <p class="text-muted">Professional auto electrical services for all vehicle types</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    {% set icons = ['bolt','charging-station','plug','lightbulb','stethoscope','tools','battery-full','box-open'] %}
+    <div class="row g-4">
+      {% for svc in services %}
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 60 }}">
+        <div class="card-dark service-card">
+          <div class="d-flex gap-4">
+            <div class="service-icon flex-shrink-0"><i class="fas fa-{{ icons[loop.index0 % 8] }}"></i></div>
+            <div class="flex-grow-1">
+              <h4 style="font-family:var(--font-display);font-size:21px;margin-bottom:10px">{{ svc.name }}</h4>
+              <p class="text-muted">{{ svc.description }}</p>
+              <div class="d-flex flex-wrap gap-3 mt-3">
+                {% if svc.price_range %}<div class="service-price"><i class="fas fa-tag me-1"></i>{{ svc.price_range }}</div>{% endif %}
+                {% if svc.duration_estimate %}<div class="service-price"><i class="fas fa-clock me-1"></i>{{ svc.duration_estimate }}</div>{% endif %}
+              </div>
+              {% if svc.vehicle_types %}
+              <div class="mt-3 d-flex flex-wrap gap-1">
+                {% for vt in svc.vehicle_types.split(',') %}
+                <span class="badge" style="background:var(--dark-3);color:var(--text-muted);font-size:11px">{{ vt.strip() }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+              <a href="/booking?service={{ svc.id }}" class="btn-primary-custom mt-3" style="font-size:13px;padding:10px 22px">
+                <i class="fas fa-calendar-check me-1"></i>Book This Service
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <div class="cta-banner">
+        <h4 style="font-family:var(--font-display);font-size:22px"><i class="fas fa-phone-volume text-warning me-2"></i>Can't find your service? Call us!</h4>
+        <p class="text-muted mt-2">We handle all auto electrical problems. Our experts are ready to help.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+          <a href="tel:+919959592564" class="btn-primary-custom"><i class="fas fa-phone me-1"></i>+91 99595 92564</a>
+          <a href="https://wa.me/919959592564" target="_blank" class="btn-outline-custom" style="color:#25D366;border-color:#25D366"><i class="fab fa-whatsapp me-1"></i>WhatsApp Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

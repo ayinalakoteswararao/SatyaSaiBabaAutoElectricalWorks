@@ -1,0 +1,124 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+{% block content %}
+
+<!-- Welcome Banner -->
+<div class="card mb-4" style="background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);border:none;border-radius:12px;padding:24px;color:white">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <h4 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;margin-bottom:8px"><i class="fas fa-bolt me-2"></i>Welcome back, {{ session.admin_username }}!</h4>
+      <p class="mb-0" style="opacity:0.9;font-size:0.95rem">Manage your inventory, bookings, and customer inquiries from one place.</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <div class="d-flex gap-2 justify-content-md-end">
+        <a href="/admin/bookings" class="btn" style="background:rgba(255,255,255,0.2);color:white;border:none;padding:8px 16px;font-size:0.85rem;font-weight:600;border-radius:6px"><i class="fas fa-calendar-check me-1"></i>Bookings</a>
+        <a href="/admin/products" class="btn" style="background:rgba(255,255,255,0.2);color:white;border:none;padding:8px 16px;font-size:0.85rem;font-weight:600;border-radius:6px"><i class="fas fa-cog me-1"></i>Products</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="stat-value" style="color:#FFA000">{{ stats.pending_bookings }}</div>
+          <div class="stat-label">Pending Bookings</div>
+        </div>
+        <div class="stat-icon" style="background:rgba(255,160,0,0.15);color:#FFA000"><i class="fas fa-calendar-check"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="stat-value" style="color:#2196F3">{{ stats.unread_inquiries }}</div>
+          <div class="stat-label">Unread Inquiries</div>
+        </div>
+        <div class="stat-icon" style="background:rgba(33,150,243,0.15);color:#2196F3"><i class="fas fa-envelope"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="stat-value" style="color:var(--primary)">{{ stats.products }}</div>
+          <div class="stat-label">Active Products</div>
+        </div>
+        <div class="stat-icon" style="background:rgba(37,99,235,0.15);color:var(--primary)"><i class="fas fa-cogs"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="stat-value" style="color:#10B981">{{ stats.customers }}</div>
+          <div class="stat-label">Total Customers</div>
+        </div>
+        <div class="stat-icon" style="background:rgba(16,185,129,0.15);color:#10B981"><i class="fas fa-users"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card" style="background:var(--white);border:1px solid var(--gray-light);border-radius:8px;padding:20px;box-shadow:0 2px 4px rgba(0,0,0,.05)">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 style="font-family:'Barlow Condensed',sans-serif;margin:0;color:var(--primary-dark);font-weight:700"><i class="fas fa-calendar-check me-2 text-warning"></i>Recent Bookings</h5>
+        <a href="/admin/bookings" class="small" style="color:var(--primary)">View all &rarr;</a>
+      </div>
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead><tr><th>#</th><th>Customer</th><th>Service</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            {% for b in recent_bookings %}
+            <tr>
+              <td class="text-mono text-muted">#{{ b.id }}</td>
+              <td><div style="font-weight:600">{{ b.customer_name }}</div><div class="text-muted" style="font-size:12px">{{ b.phone }}</div></td>
+              <td class="text-muted" style="font-size:13px">{{ b.service_name or 'General Service' }}</td>
+              <td style="font-family:var(--font-mono);font-size:13px;color:var(--primary)">{{ b.booking_date }}</td>
+              <td><span class="status-badge badge-{{ b.status.replace(' ','-') }}">{{ b.status.title() }}</span></td>
+              <td><a href="/admin/bookings" style="font-size:12px;color:var(--primary)">Manage</a></td>
+            </tr>
+            {% else %}<tr><td colspan="6" class="text-center text-muted py-4">No bookings yet</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-4" style="background:var(--white);border:1px solid var(--gray-light);border-radius:8px;padding:20px;box-shadow:0 2px 4px rgba(0,0,0,.05)">
+      <h5 style="font-family:'Barlow Condensed',sans-serif;margin-bottom:16px;color:var(--primary-dark);font-weight:700"><i class="fas fa-exclamation-triangle me-2 text-danger"></i>Low Stock Alert</h5>
+      {% if low_stock %}
+        {% for item in low_stock %}
+        <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color:var(--border) !important">
+          <span style="font-size:13px">{{ item.name[:30] }}...</span>
+          <span class="badge" style="background:rgba(255,59,59,0.15);color:var(--red);border:1px solid rgba(255,59,59,0.3)">{{ item.stock_quantity }} left</span>
+        </div>
+        {% endfor %}
+        <a href="/admin/products" class="d-block text-center mt-3" style="padding:8px;font-size:13px;color:var(--primary);border:1px solid var(--primary);border-radius:6px;text-decoration:none">Manage Inventory</a>
+      {% else %}
+        <p class="text-muted small">All products well stocked <i class="fas fa-check text-success ms-1"></i></p>
+      {% endif %}
+    </div>
+    <div class="card" style="background:var(--white);border:1px solid var(--gray-light);border-radius:8px;padding:20px;box-shadow:0 2px 4px rgba(0,0,0,.05)">
+      <h5 style="font-family:'Barlow Condensed',sans-serif;margin-bottom:16px;color:var(--primary-dark);font-weight:700"><i class="fas fa-envelope me-2 text-primary"></i>Recent Inquiries</h5>
+      {% for inq in recent_inquiries %}
+      <div class="py-2 border-bottom" style="border-color:var(--border) !important">
+        <div class="d-flex justify-content-between"><span style="font-weight:600;font-size:14px">{{ inq.name }}</span><span class="text-muted" style="font-size:11px">{{ inq.created_at.strftime('%d %b') if inq.created_at else '' }}</span></div>
+        <div class="text-muted" style="font-size:12px">{{ inq.subject or inq.message[:50] }}...</div>
+      </div>
+      {% else %}<p class="text-muted small">No new inquiries</p>{% endfor %}
+      <a href="/admin/inquiries" class="d-block text-center mt-3" style="padding:8px;font-size:13px;color:var(--primary);border:1px solid var(--primary);border-radius:6px;text-decoration:none">View All</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

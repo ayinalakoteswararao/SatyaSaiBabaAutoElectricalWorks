@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Book a Service | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <h1 class="mt-2"><i class="fas fa-calendar-check text-warning me-2"></i>Book a Service</h1>
+    <p class="text-muted">Schedule your auto electrical service online. We'll confirm within 2 hours.</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="booking-step">
+          <h4 style="font-family:var(--font-display);font-size:22px;margin-bottom:24px"><span class="step-number">1</span>Fill Your Details</h4>
+          <form method="POST" action="/booking" class="form-dark" id="bookingForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name *</label>
+                <input type="text" name="name" class="form-control" placeholder="Your name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number *</label>
+                <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="Optional">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Service Required *</label>
+                <select name="service_id" class="form-select" required>
+                  <option value="">Select a service...</option>
+                  {% for svc in services %}<option value="{{ svc.id }}" {% if request.args.get('service')==svc.id|string %}selected{% endif %}>{{ svc.name }}</option>{% endfor %}
+                </select>
+              </div>
+              <div class="col-12"><hr class="divider"><h5 style="font-family:var(--font-display)"><span class="step-number">2</span>Vehicle Details</h5></div>
+              <div class="col-md-4">
+                <label class="form-label">Vehicle Type *</label>
+                <select name="vehicle_type" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="2-wheeler">2 Wheeler</option>
+                  <option value="3-wheeler">3 Wheeler</option>
+                  <option value="4-wheeler">4 Wheeler</option>
+                  <option value="lightweight">Light Weight Vehicle</option>
+                  <option value="heavy">Heavy Vehicle</option>
+                  <option value="genset">Generator/Genset</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Vehicle Make</label>
+                <input type="text" name="vehicle_make" class="form-control" placeholder="e.g. Honda, Maruti">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Vehicle Model</label>
+                <input type="text" name="vehicle_model" class="form-control" placeholder="e.g. Activa, Swift">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Vehicle Number</label>
+                <input type="text" name="vehicle_number" class="form-control" placeholder="TS 09 AB 1234">
+              </div>
+              <div class="col-12"><hr class="divider"><h5 style="font-family:var(--font-display)"><span class="step-number">3</span>Schedule</h5></div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Date *</label>
+                <input type="date" name="booking_date" id="booking_date" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Time</label>
+                <select name="booking_time" class="form-select">
+                  <option value="">Any time</option>
+                  <option value="08:00">8:00 AM</option><option value="09:00">9:00 AM</option>
+                  <option value="10:00">10:00 AM</option><option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option><option value="14:00">2:00 PM</option>
+                  <option value="15:00">3:00 PM</option><option value="16:00">4:00 PM</option>
+                  <option value="17:00">5:00 PM</option><option value="18:00">6:00 PM</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Problem Description</label>
+                <textarea name="problem_description" class="form-control" rows="4" placeholder="Describe the issue with your vehicle's electrical system..."></textarea>
+              </div>
+              <div class="col-12 mt-2">
+                <button type="submit" class="btn-primary-custom w-100" style="font-size:16px;padding:16px">
+                  <i class="fas fa-calendar-check me-2"></i>Confirm Booking
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card-dark mb-3" style="height:auto;padding:20px">
+          <h5 style="font-family:var(--font-display)"><i class="fas fa-info-circle text-warning me-2"></i>Booking Info</h5>
+          <ul class="list-unstyled mt-3">
+            <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-warning mt-1"></i><span>Free consultation &amp; diagnosis with every booking</span></li>
+            <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-warning mt-1"></i><span>We'll confirm your appointment within 2 hours</span></li>
+            <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-warning mt-1"></i><span>Same-day service available for most repairs</span></li>
+            <li class="d-flex gap-2"><i class="fas fa-check text-warning mt-1"></i><span>All work backed by service warranty</span></li>
+          </ul>
+        </div>
+        <div class="card-dark mb-3" style="height:auto;padding:16px">
+          <h5 style="font-family:var(--font-display);margin-bottom:12px"><i class="fas fa-clock text-warning me-2"></i>Working Hours</h5>
+          <table class="w-100" style="font-size:13px;line-height:1.4">
+            <tr><td class="text-muted">Mon - Fri</td><td class="text-end text-warning fw-bold">9:30 AM - 9:30 PM</td></tr>
+            <tr><td class="text-muted">Saturday</td><td class="text-end text-warning fw-bold">9:30 AM - 9:30 PM</td></tr>
+            <tr><td class="text-muted">Sunday</td><td class="text-end text-warning fw-bold">10 AM - 1 PM</td></tr>
+          </table>
+        </div>
+        <div class="card-dark" style="height:auto;padding:16px">
+          <h5 style="font-family:var(--font-display);margin-bottom:10px"><i class="fab fa-whatsapp text-warning me-2"></i>Quick Contact</h5>
+          <p class="text-muted small mb-2">Prefer WhatsApp? Send us a message.</p>
+          <a href="https://wa.me/919959592564?text=Hi, I'd like to book a service" target="_blank" class="btn w-100" style="background:#25D366;color:white;font-family:var(--font-display);font-weight:700;padding:10px 12px;font-size:14px">
+            <i class="fab fa-whatsapp me-1"></i>Chat on WhatsApp
+          </a>
+        </div>
+        <div class="card-dark mt-3" style="height:auto;padding:16px">
+          <h5 style="font-family:var(--font-display);margin-bottom:10px"><i class="fas fa-phone-alt text-warning me-2"></i>Call Us</h5>
+          <p class="text-muted small mb-2">Speak directly with our team.</p>
+          <a href="tel:+919959592564" class="btn w-100" style="background:var(--primary);color:white;font-family:var(--font-display);font-weight:700;padding:10px 12px;font-size:14px">
+            <i class="fas fa-phone me-1"></i>+91 99595 92564
+          </a>
+        </div>
+        <div class="card-dark mt-3" style="height:auto;padding:16px">
+          <h5 style="font-family:var(--font-display);margin-bottom:10px"><i class="fas fa-map-marker-alt text-warning me-2"></i>Visit Us</h5>
+          <p class="text-muted small mb-0">Gudivada, Krishna District, Andhra Pradesh</p>
+        </div>
+        <div class="card-dark mt-3" style="height:auto;padding:16px">
+          <h5 style="font-family:var(--font-display);margin-bottom:10px"><i class="fas fa-bolt text-warning me-2"></i>Emergency Service</h5>
+          <p class="text-muted small mb-2">Urgent repairs? We provide 24/7 emergency auto electrical services.</p>
+          <span class="badge" style="background:rgba(255,214,0,0.15);color:var(--yellow);padding:6px 12px;font-size:12px"><i class="fas fa-clock me-1"></i>Available 24/7</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

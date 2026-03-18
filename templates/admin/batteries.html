@@ -1,0 +1,100 @@
+{% extends "admin/base.html" %}
+{% block title %}Batteries{% endblock %}
+{% block page_title %}Battery Inventory{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <p class="text-muted mb-0">{{ batteries|length }} batteries in inventory</p>
+  <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addBatModal"><i class="fas fa-plus me-1"></i>Add Battery</button>
+</div>
+<div class="card-dark">
+  <div class="table-responsive">
+    <table class="admin-table">
+      <thead><tr><th>ID</th><th>Brand</th><th>Model</th><th>Vehicle</th><th>Capacity</th><th>Price</th><th>Stock</th><th>Warranty</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for bat in batteries %}
+        <tr>
+          <td class="text-mono text-muted">{{ bat.id }}</td>
+          <td><span class="battery-brand-badge" style="font-size:11px">{{ bat.brand }}</span></td>
+          <td style="font-weight:600">{{ bat.model }}</td>
+          <td class="text-muted" style="font-size:13px">{{ bat.vehicle_type }}</td>
+          <td class="text-mono">{{ bat.capacity_ah }}Ah / {{ bat.voltage }}V</td>
+          <td class="text-warning" style="font-family:var(--font-display);font-weight:700">{% if bat.price %}&#x20B9;{{ "%.0f"|format(bat.price) }}{% else %}-{% endif %}</td>
+          <td><span class="{% if bat.stock_quantity > 3 %}in-stock{% elif bat.stock_quantity > 0 %}low-stock-text{% else %}out-stock{% endif %}">{{ bat.stock_quantity }}</span></td>
+          <td class="text-muted" style="font-size:13px">{{ bat.warranty_months }}mo</td>
+          <td><button class="btn btn-sm btn-outline-warning" data-bat-id="{{ bat.id }}" data-brand="{{ bat.brand }}" data-model="{{ bat.model }}" data-cap="{{ bat.capacity_ah }}" data-volt="{{ bat.voltage }}" data-warr="{{ bat.warranty_months }}" data-vtype="{{ bat.vehicle_type }}" data-price="{{ bat.price }}" data-stock="{{ bat.stock_quantity }}" data-desc="{{ bat.description or '' }}" onclick="editBattery(this)">Edit</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" id="addBatModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" style="font-family:var(--font-display)">Add Battery</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <form method="POST" action="/admin/batteries/add" class="form-dark">
+      <div class="modal-body"><div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Brand *</label><select name="brand" class="form-select" required><option value="Amaron">Amaron</option><option value="Exide">Exide</option><option value="Tata Green">Tata Green</option></select></div>
+        <div class="col-md-6"><label class="form-label">Model *</label><input type="text" name="model" class="form-control" required></div>
+        <div class="col-md-4"><label class="form-label">Capacity (Ah)</label><input type="number" name="capacity_ah" class="form-control"></div>
+        <div class="col-md-4"><label class="form-label">Voltage (V)</label><input type="number" name="voltage" class="form-control" value="12"></div>
+        <div class="col-md-4"><label class="form-label">Warranty (mo)</label><input type="number" name="warranty_months" class="form-control" value="12"></div>
+        <div class="col-md-6"><label class="form-label">Vehicle Type *</label><select name="vehicle_type" class="form-select" required><option value="2-wheeler">2 Wheeler</option><option value="3-wheeler">3 Wheeler</option><option value="4-wheeler">4 Wheeler</option><option value="lightweight">Light Weight</option><option value="heavy">Heavy</option><option value="genset">Genset</option></select></div>
+        <div class="col-md-3"><label class="form-label">Price (₹)</label><input type="number" name="price" class="form-control" step="0.01"></div>
+        <div class="col-md-3"><label class="form-label">Stock</label><input type="number" name="stock_quantity" class="form-control" value="0"></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+      </div></div>
+      <div class="modal-footer"><button type="button" class="btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn-primary-custom">Add Battery</button></div>
+    </form>
+  </div></div>
+</div>
+
+<div class="modal fade" id="editBatModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" style="font-family:var(--font-display)">Edit Battery</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <form method="POST" id="editBatForm" class="form-dark">
+      <div class="modal-body"><div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Brand</label><select name="brand" id="ebat_brand" class="form-select"><option value="Amaron">Amaron</option><option value="Exide">Exide</option><option value="Tata Green">Tata Green</option></select></div>
+        <div class="col-md-6"><label class="form-label">Model</label><input type="text" name="model" id="ebat_model" class="form-control"></div>
+        <div class="col-md-4"><label class="form-label">Capacity (Ah)</label><input type="number" name="capacity_ah" id="ebat_cap" class="form-control"></div>
+        <div class="col-md-4"><label class="form-label">Voltage (V)</label><input type="number" name="voltage" id="ebat_volt" class="form-control"></div>
+        <div class="col-md-4"><label class="form-label">Warranty (mo)</label><input type="number" name="warranty_months" id="ebat_warr" class="form-control"></div>
+        <div class="col-md-6"><label class="form-label">Vehicle Type</label><select name="vehicle_type" id="ebat_vtype" class="form-select"><option value="2-wheeler">2 Wheeler</option><option value="3-wheeler">3 Wheeler</option><option value="4-wheeler">4 Wheeler</option><option value="lightweight">Light Weight</option><option value="heavy">Heavy</option><option value="genset">Genset</option></select></div>
+        <div class="col-md-3"><label class="form-label">Price (₹)</label><input type="number" name="price" id="ebat_price" class="form-control" step="0.01"></div>
+        <div class="col-md-3"><label class="form-label">Stock</label><input type="number" name="stock_quantity" id="ebat_stock" class="form-control"></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea name="description" id="ebat_desc" class="form-control" rows="2"></textarea></div>
+      </div></div>
+      <div class="modal-footer"><button type="button" class="btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn-primary-custom">Update</button></div>
+    </form>
+  </div></div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function editBattery(btn) {
+  const b = {
+    id: btn.dataset.batId,
+    brand: btn.dataset.brand,
+    model: btn.dataset.model,
+    capacity_ah: btn.dataset.cap,
+    voltage: btn.dataset.volt,
+    warranty_months: btn.dataset.warr,
+    vehicle_type: btn.dataset.vtype,
+    price: btn.dataset.price,
+    stock_quantity: btn.dataset.stock,
+    description: btn.dataset.desc
+  };
+  document.getElementById('editBatForm').action = '/admin/batteries/edit/' + b.id;
+  document.getElementById('ebat_brand').value = b.brand;
+  document.getElementById('ebat_model').value = b.model;
+  document.getElementById('ebat_cap').value = b.capacity_ah || '';
+  document.getElementById('ebat_volt').value = b.voltage || 12;
+  document.getElementById('ebat_warr').value = b.warranty_months || 12;
+  document.getElementById('ebat_vtype').value = b.vehicle_type;
+  document.getElementById('ebat_price').value = b.price || '';
+  document.getElementById('ebat_stock').value = b.stock_quantity;
+  document.getElementById('ebat_desc').value = b.description || '';
+  new bootstrap.Modal(document.getElementById('editBatModal')).show();
+}
+</script>
+{% endblock %}

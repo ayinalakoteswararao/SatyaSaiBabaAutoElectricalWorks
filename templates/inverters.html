@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+{% block title %}Inverters | Satya Sai Baba Auto Electrical Works{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/products">Parts</a></li>
+        <li class="breadcrumb-item active">Inverters</li>
+      </ol>
+    </nav>
+    <h1 class="mt-2"><i class="fas fa-plug text-warning me-2"></i>Home UPS & Inverters</h1>
+    <p class="text-muted">Reliable power backup solutions for homes and offices from top brands</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Brand Navigation -->
+    <div class="row g-3 mb-5">
+      <div class="col-md-4">
+        <a href="#tata-green" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-tatagreen" style="border-top:4px solid #016BB2">
+            <i class="fas fa-home fa-2x mb-2 brand-icon-color" style="color:#016BB2"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:#016BB2">TATA GREEN</div>
+            <div class="text-muted small mt-1">Home UPS / Inverter</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#exide" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-exide" style="border-top:4px solid #DA0011">
+            <i class="fas fa-bolt fa-2x mb-2 brand-icon-color" style="color:#DA0011"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:#DA0011">EXIDE</div>
+            <div class="text-muted small mt-1">Home Star | GQP | Magic</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="#amaron" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-amaron" style="border-top:4px solid #9AC93B">
+            <i class="fas fa-plug fa-2x mb-2 brand-icon-color" style="color:#9AC93B"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:#9AC93B">AMARON</div>
+            <div class="text-muted small mt-1">Square Wave | Sine Wave</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Inverter Batteries Section -->
+    <div class="vehicle-category-header mb-4">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--primary);border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block">
+        <i class="fas fa-battery-full me-2 text-warning"></i>Inverter Batteries
+      </h2>
+      <p class="text-muted">Long-lasting tubular batteries designed for inverter applications</p>
+    </div>
+
+    <div class="row g-3 mb-5">
+      <div class="col-md-4">
+        <a href="/batteries?brand=TATAGREEN-INVERTER" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-tatagreen" style="border-top:4px solid #016BB2">
+            <i class="fas fa-battery-full fa-2x mb-2" style="color:#016BB2"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:16px;color:#016BB2">TATA GREEN Inverter Batteries</div>
+            <div class="text-muted small mt-1">TG Series | Long Backup</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/batteries?brand=EXIDE-INVAMASTER" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-exide" style="border-top:4px solid #DA0011">
+            <i class="fas fa-battery-full fa-2x mb-2" style="color:#DA0011"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:16px;color:#DA0011">EXIDE InvaMaster</div>
+            <div class="text-muted small mt-1">Tubular | High Capacity</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/batteries?brand=AMARON-BLACK" class="text-decoration-none">
+          <div class="battery-card text-center py-4 brand-amaron" style="border-top:4px solid #9AC93B">
+            <i class="fas fa-battery-full fa-2x mb-2" style="color:#9AC93B"></i>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:16px;color:#9AC93B">AMARON Black</div>
+            <div class="text-muted small mt-1">Tubular Inverter Battery</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ========== TATA GREEN ========== -->
+    <div id="tata-green" class="vehicle-category-header mb-4 mt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:#016BB2;border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block">
+        <i class="fas fa-home me-2 text-warning"></i>TATA GREEN Home UPS / Inverter
+      </h2>
+      <p class="text-muted">Reliable power backup solutions for homes and small offices</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+      {% set tata_inverters = [
+        ('TG 675 VA', '675 VA / 12V', '1 Year Warranty', '4,500'),
+        ('TG 850 VA', '850 VA / 12V', '1 Year Warranty', '5,200'),
+        ('TG 1050 VA', '1050 VA / 12V', '1 Year Warranty', '6,500'),
+        ('TG 1450 VA', '1450 VA / 24V', '1 Year Warranty', '8,200'),
+        ('TG 2000 VA', '2000 VA / 24V', '1 Year Warranty', '11,500'),
+        ('TG 3000 VA', '3000 VA / 36V', '1 Year Warranty', '15,800'),
+        ('TG 5000 VA', '5000 VA / 48V', '1 Year Warranty', '24,500'),
+        ('TG 7500 VA', '7500 VA / 96V', '1 Year Warranty', '35,800'),
+        ('TG 10000 VA', '10000 VA / 120V', '1 Year Warranty', '48,500')
+      ] %}
+      {% for model, specs, warranty, price in tata_inverters %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+        <div class="battery-card h-100" style="padding:20px;border-top:3px solid #016BB2">
+          <div class="battery-brand-badge" style="background:#016BB2;color:white">TATA GREEN</div>
+          <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#016BB2">{{ model }}</h5>
+          <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+          <div class="mt-2 mb-2">
+            <span style="font-size:12px;color:#016BB2"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+            <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+          </div>
+          <p class="text-muted small" style="font-size:11px;line-height:1.4">Home UPS with pure sine wave output for safe operation of all appliances</p>
+          <div class="mt-auto pt-2 border-top">
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#016BB2">₹{{ price }}</div>
+            <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+            <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#016BB2;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- ========== EXIDE ========== -->
+    <div id="exide" class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:#DA0011;border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block">
+        <i class="fas fa-bolt me-2 text-warning"></i>EXIDE Home Inverters
+      </h2>
+      <p class="text-muted">Advanced inverter technology for reliable power backup</p>
+    </div>
+
+    <!-- EXIDE Home Star -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-star me-2" style="color:#DA0011"></i>EXIDE Home Star Series</h3>
+        <p class="text-muted">Entry-level inverter series with robust performance</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_star = [
+          ('Home Star 850 VA', '850 VA / 12V', '2 Year Warranty', '4,850'),
+          ('Home Star 1050 VA', '1050 VA / 12V', '2 Year Warranty', '5,650'),
+          ('Home Star 1450 VA', '1450 VA / 24V', '2 Year Warranty', '7,450'),
+          ('Home Star 2000 VA', '2000 VA / 24V', '2 Year Warranty', '10,850')
+        ] %}
+        {% for model, specs, warranty, price in exide_star %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">{{ model }}</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Reliable entry-level inverter with intelligent battery management</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- EXIDE Home GQP -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-gem me-2" style="color:#DA0011"></i>EXIDE Home GQP Series</h3>
+        <p class="text-muted">High-performance inverter with grid quality power</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_gqp = [
+          ('Home GQP 850 VA', '850 VA / 12V', '2 Year Warranty', '5,450'),
+          ('Home GQP 1050 VA', '1050 VA / 12V', '2 Year Warranty', '6,450'),
+          ('Home GQP 1450 VA', '1450 VA / 24V', '2 Year Warranty', '8,450'),
+          ('Home GQP 2000 VA', '2000 VA / 24V', '2 Year Warranty', '12,450'),
+          ('Home GQP 3000 VA', '3000 VA / 36V', '2 Year Warranty', '17,850'),
+          ('Home GQP 5000 VA', '5000 VA / 48V', '2 Year Warranty', '28,450')
+        ] %}
+        {% for model, specs, warranty, price in exide_gqp %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">{{ model }}</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Grid Quality Power output with advanced DSP technology</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- EXIDE Home Magic -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#DA0011"><i class="fas fa-magic me-2" style="color:#DA0011"></i>EXIDE Home Magic Series</h3>
+        <p class="text-muted">Premium inverter series with maximum efficiency</p>
+      </div>
+      <div class="row g-4">
+        {% set exide_magic = [
+          ('Home Magic 850 VA', '850 VA / 12V', '3 Year Warranty', '6,250'),
+          ('Home Magic 1050 VA', '1050 VA / 12V', '3 Year Warranty', '7,450'),
+          ('Home Magic 1450 VA', '1450 VA / 24V', '3 Year Warranty', '9,850'),
+          ('Home Magic 2000 VA', '2000 VA / 24V', '3 Year Warranty', '14,450'),
+          ('Home Magic 3000 VA', '3000 VA / 36V', '3 Year Warranty', '20,850'),
+          ('Home Magic 5000 VA', '5000 VA / 48V', '3 Year Warranty', '32,450'),
+          ('Home Magic 7500 VA', '7500 VA / 96V', '3 Year Warranty', '48,850'),
+          ('Home Magic 10000 VA', '10000 VA / 120V', '3 Year Warranty', '65,450')
+        ] %}
+        {% for model, specs, warranty, price in exide_magic %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #DA0011">
+            <div class="battery-brand-badge" style="background:#DA0011;color:white">EXIDE</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#DA0011">{{ model }}</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#DA0011"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Premium series with maximum efficiency and intelligent power management</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#DA0011">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#DA0011;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ========== AMARON ========== -->
+    <div id="amaron" class="vehicle-category-header mb-4 mt-5 pt-5">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:#9AC93B;border-bottom:3px solid var(--yellow);padding-bottom:10px;display:inline-block">
+        <i class="fas fa-plug me-2 text-warning"></i>AMARON Home UPS / Inverters
+      </h2>
+      <p class="text-muted">Advanced home UPS systems with cutting-edge technology</p>
+    </div>
+
+    <!-- AMARON Square Wave -->
+    <div class="mt-4 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-wave-square me-2" style="color:#9AC93B"></i>AMARON Square Wave Home UPS</h3>
+        <p class="text-muted">Cost-effective solution for basic power backup needs</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_square = [
+          ('Square Wave 650 VA', '650 VA / 12V', '1 Year Warranty', '3,850'),
+          ('Square Wave 850 VA', '850 VA / 12V', '1 Year Warranty', '4,650'),
+          ('Square Wave 1050 VA', '1050 VA / 12V', '1 Year Warranty', '5,450'),
+          ('Square Wave 1450 VA', '1450 VA / 24V', '1 Year Warranty', '7,250'),
+          ('Square Wave 2000 VA', '2000 VA / 24V', '1 Year Warranty', '10,450')
+        ] %}
+        {% for model, specs, warranty, price in amaron_square %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">{{ model }}</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Square wave output for basic appliances and lighting loads</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- AMARON Sine Wave -->
+    <div class="mt-5 pt-4 border-top">
+      <div class="section-header mb-4">
+        <h3 style="font-family:var(--font-display);font-weight:700;color:#9AC93B"><i class="fas fa-sine-wave me-2" style="color:#9AC93B"></i>AMARON Sine Wave Home UPS</h3>
+        <p class="text-muted">Pure sine wave output for all sensitive appliances</p>
+      </div>
+      <div class="row g-4">
+        {% set amaron_sine = [
+          ('Sine Wave 850 VA', '850 VA / 12V', '2 Year Warranty', '5,450'),
+          ('Sine Wave 1050 VA', '1050 VA / 12V', '2 Year Warranty', '6,450'),
+          ('Sine Wave 1450 VA', '1450 VA / 24V', '2 Year Warranty', '8,850'),
+          ('Sine Wave 2000 VA', '2000 VA / 24V', '2 Year Warranty', '12,850'),
+          ('Sine Wave 3000 VA', '3000 VA / 36V', '2 Year Warranty', '18,450'),
+          ('Sine Wave 5000 VA', '5000 VA / 48V', '2 Year Warranty', '29,850'),
+          ('Sine Wave 7500 VA', '7500 VA / 96V', '2 Year Warranty', '44,850'),
+          ('Sine Wave 10000 VA', '10000 VA / 120V', '2 Year Warranty', '59,850')
+        ] %}
+        {% for model, specs, warranty, price in amaron_sine %}
+        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 4) * 60 }}">
+          <div class="battery-card h-100" style="padding:20px;border-top:3px solid #9AC93B">
+            <div class="battery-brand-badge" style="background:#9AC93B;color:white">AMARON</div>
+            <h5 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-top:8px;color:#9AC93B">{{ model }}</h5>
+            <div style="font-size:14px;color:var(--text-light);font-weight:600">{{ specs }}</div>
+            <div class="mt-2 mb-2">
+              <span style="font-size:12px;color:#9AC93B"><i class="fas fa-shield-alt me-1"></i>{{ warranty }}*</span>
+              <div style="font-size:10px;color:var(--text-muted)">* T&C Apply</div>
+            </div>
+            <p class="text-muted small" style="font-size:11px;line-height:1.4">Pure sine wave output safe for computers, TVs, and all sensitive electronics</p>
+            <div class="mt-auto pt-2 border-top">
+              <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#9AC93B">₹{{ price }}</div>
+              <div style="font-size:11px;color:var(--text-muted)">Price inclusive of taxes</div>
+              <a href="tel:+919959592564" class="btn w-100 mt-2" style="background:#9AC93B;color:white;font-family:var(--font-display);font-weight:700;padding:8px 12px;font-size:12px"><i class="fas fa-phone me-1"></i>Call Us</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-banner mt-5">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h4 style="font-family:var(--font-display);font-weight:700;color:var(--text-dark)">Need Help Choosing the Right Inverter?</h4>
+          <p class="text-muted mb-0">Our experts can help you select the perfect inverter based on your power requirements and budget.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <a href="tel:+919959592564" class="btn btn-primary-custom">
+            <i class="fas fa-phone me-2"></i>Call Now
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

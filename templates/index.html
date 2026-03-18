@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% block title %}Satya Sai Baba Auto Electrical Works | Authorized Bosch Workshop{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="row align-items-center py-5" style="min-height:90vh">
+      <div class="col-lg-7 hero-content" data-aos="fade-right">
+        <div class="hero-badge"><i class="fas fa-certificate"></i> Authorized Bosch Workshop &middot; Since 2005</div>
+        <h1>Expert <span class="highlight">Auto Electrical</span><br>Services &amp; Spare Parts</h1>
+        <p class="hero-desc">Your trusted destination for genuine spare parts, professional electrical repairs, and battery solutions for all vehicle types in Gudivada, Krishna District, Andhra Pradesh
+.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="/booking" class="btn-primary-custom"><i class="fas fa-calendar-check"></i> Book a Service</a>
+          <a href="/products" class="btn-outline-custom"><i class="fas fa-search"></i> Browse Parts</a>
+        </div>
+        <div class="mt-4">
+          <p class="small text-muted mb-2">We service all vehicle types:</p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 14px;font-family:var(--font-display);font-size:12px"><i class="fas fa-motorcycle me-1 text-warning"></i>2 Wheelers</span>
+            <span class="badge" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 14px;font-family:var(--font-display);font-size:12px"><i class="fas fa-taxi me-1 text-warning"></i>3 Wheelers</span>
+            <span class="badge" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 14px;font-family:var(--font-display);font-size:12px"><i class="fas fa-car me-1 text-warning"></i>4 Wheelers</span>
+            <span class="badge" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 14px;font-family:var(--font-display);font-size:12px"><i class="fas fa-truck me-1 text-warning"></i>HMV/LMV</span>
+            <span class="badge" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 14px;font-family:var(--font-display);font-size:12px"><i class="fas fa-bolt me-1 text-warning"></i>Gensets</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num" data-count="500" data-suffix="+">0</div><div class="hero-stat-label">Jobs Completed</div></div>
+          <div><div class="hero-stat-num" data-count="{{ product_count or 200 }}" data-suffix="+">0</div><div class="hero-stat-label">Spare Parts</div></div>
+          <div><div class="hero-stat-num" data-count="5" data-suffix="">0</div><div class="hero-stat-label">Premium Brands</div></div>
+          <div><div class="hero-stat-num" data-count="18" data-suffix="+">0</div><div class="hero-stat-label">Years Experience</div></div>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-center" data-aos="fade-left">
+        <div class="hero-visual">
+          <div class="hero-circle">
+            <div class="hero-center-content">
+              <div class="center-logo">SSB</div>
+              <div class="center-name">Satya Sai Baba</div>
+              <div class="center-tagline">Auto Electrical Works</div>
+              <div class="center-badge"><i class="fas fa-certificate"></i> Bosch Authorized</div>
+            </div>
+            <div class="orbit-icon" style="top:-24px;left:50%;transform:translateX(-50%)"><i class="fas fa-cog"></i></div>
+            <div class="orbit-icon" style="top:15%;right:15%;transform:translate(50%,-50%)"><i class="fas fa-motorcycle"></i></div>
+            <div class="orbit-icon" style="right:-24px;top:50%;transform:translateY(-50%)"><i class="fas fa-battery-full"></i></div>
+            <div class="orbit-icon" style="bottom:15%;right:15%;transform:translate(50%,50%)"><i class="fas fa-taxi"></i></div>
+            <div class="orbit-icon" style="bottom:-24px;left:50%;transform:translateX(-50%)"><i class="fas fa-wrench"></i></div>
+            <div class="orbit-icon" style="bottom:15%;left:15%;transform:translate(-50%,50%)"><i class="fas fa-truck"></i></div>
+            <div class="orbit-icon" style="left:-24px;top:50%;transform:translateY(-50%)"><i class="fas fa-car"></i></div>
+            <div class="orbit-icon" style="top:15%;left:15%;transform:translate(-50%,-50%)"><i class="fas fa-bolt"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="container">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3"><div class="stat-num">500+</div><div class="stat-lbl">Happy Customers</div></div>
+      <div class="col-6 col-md-3"><div class="stat-num">18+</div><div class="stat-lbl">Years Experience</div></div>
+      <div class="col-6 col-md-3"><div class="stat-num">5</div><div class="stat-lbl">Premium Brands</div></div>
+      <div class="col-6 col-md-3"><div class="stat-num">Same Day</div><div class="stat-lbl">Service Available</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm section-dark">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center mb-4" data-aos="fade-up">
+          <h3 class="section-title" style="font-size:28px">Find Spare Parts Instantly</h3>
+          <p class="text-muted">Search by part name, part number, or brand</p>
+        </div>
+        <div class="search-wrapper" data-aos="fade-up">
+          <div class="input-group">
+            <span class="input-group-text" style="background:var(--dark-4);border:1px solid var(--border);border-right:none;color:var(--yellow)"><i class="fas fa-search"></i></span>
+            <input type="text" id="productSearch" class="form-control" style="background:var(--dark-4);border:1px solid var(--border);border-left:none;border-right:none;color:white;font-size:16px;padding:16px" placeholder="Search starter motor, alternator, relay...">
+            <button onclick="window.location.href='/products?q='+document.getElementById('productSearch').value" class="btn-primary-custom" style="border-radius:0 var(--radius) var(--radius) 0;padding:0 28px">Search</button>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+          <a href="/products?vehicle=2-wheeler" class="badge text-decoration-none" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 16px;font-family:var(--font-display);font-size:13px">2 Wheelers</a>
+          <a href="/products?vehicle=4-wheeler" class="badge text-decoration-none" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 16px;font-family:var(--font-display);font-size:13px">4 Wheelers</a>
+          <a href="/products?vehicle=heavy" class="badge text-decoration-none" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 16px;font-family:var(--font-display);font-size:13px">Heavy Vehicles</a>
+          <a href="/products?vehicle=genset" class="badge text-decoration-none" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-light);padding:8px 16px;font-family:var(--font-display);font-size:13px">Gensets</a>
+        </div>
+        <div class="text-center mt-4">
+          <a href="/products" class="btn-outline-custom">View All Parts <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">Professional <span class="accent">Auto Electrical</span> Services</h2>
+      <div class="divider-yellow"></div>
+      <p class="section-desc">From basic diagnostics to complete electrical overhauls — we handle it all.</p>
+    </div>
+    <div class="row g-4">
+      {% set icons = ['bolt','charging-station','plug','lightbulb','stethoscope','tools','battery-full','box-open'] %}
+      {% for svc in services %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="card-dark service-card h-100">
+          <div class="service-icon"><i class="fas fa-{{ icons[loop.index0 % 8] }}"></i></div>
+          <h5>{{ svc.name }}</h5>
+          <p>{{ svc.description[:120] if svc.description else '' }}...</p>
+          {% if svc.price_range %}<div class="service-price"><i class="fas fa-tag me-1"></i>{{ svc.price_range }}</div>{% endif %}
+          {% if svc.duration_estimate %}<div class="service-price mt-1"><i class="fas fa-clock me-1"></i>{{ svc.duration_estimate }}</div>{% endif %}
+          <a href="/booking" class="btn-outline-custom mt-3" style="font-size:13px;padding:8px 18px">Book Now <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5"><a href="/services" class="btn-outline-custom">View All Services <i class="fas fa-arrow-right ms-2"></i></a></div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Trusted Brands</span>
+      <h2 class="section-title">We Stock Only <span class="accent">Genuine Parts</span></h2>
+      <div class="divider-yellow"></div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for brand in brands %}
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="brand-card" style="padding:20px">
+          <div class="brand-logo-img" style="width:100%;height:80px;margin:0"><img src="{{ url_for('static', filename=brand.name + '.png') }}" alt="{{ brand.name }}" style="max-width:100%;max-height:70px;object-fit:contain"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <div class="d-inline-flex align-items-center gap-3 px-5 py-3" style="background:rgba(255,214,0,0.06);border:2px solid rgba(255,214,0,0.3);border-radius:var(--radius-lg)">
+        <i class="fas fa-certificate fa-2x text-warning"></i>
+        <div class="text-start">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:18px">Authorized Bosch Workshop</div>
+          <div class="text-muted small">Certified technicians &middot; Genuine Bosch parts &middot; Warranty backed</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="/products" class="btn-primary-custom"><i class="fas fa-box-open me-2"></i>Browse All Parts</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Battery Solutions</span>
+      <h2 class="section-title">Premium <span class="accent">Car & Bike</span> Batteries</h2>
+      <div class="divider-yellow"></div>
+      <p class="section-desc">Authorized dealer for Amaron, Exide & Tata Green batteries with warranty.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+        <a href="/batteries?brand=Amaron" class="text-decoration-none">
+          <div class="battery-card text-center py-4 h-100" style="border-top:4px solid #FF6B35">
+            <div style="height:100px;display:flex;align-items:center;justify-content:center"><img src="{{ url_for('static', filename='Amaron.png') }}" alt="Amaron" style="max-width:180px;max-height:90px;object-fit:contain"></div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="80">
+        <a href="/batteries?brand=Exide" class="text-decoration-none">
+          <div class="battery-card text-center py-4 h-100" style="border-top:4px solid #2196F3">
+            <div style="height:100px;display:flex;align-items:center;justify-content:center"><img src="{{ url_for('static', filename='Exide.png') }}" alt="Exide" style="max-width:180px;max-height:90px;object-fit:contain"></div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+        <a href="/batteries?brand=Tata+Green" class="text-decoration-none">
+          <div class="battery-card text-center py-4 h-100" style="border-top:4px solid #4CAF50">
+            <div style="height:100px;display:flex;align-items:center;justify-content:center"><img src="{{ url_for('static', filename='Tata Green.png') }}" alt="Tata Green" style="max-width:180px;max-height:90px;object-fit:contain"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="/batteries" class="btn-outline-custom">View All Batteries <i class="fas fa-arrow-right ms-2"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Why Us</span>
+      <h2 class="section-title">Why Choose <span class="accent">Satya Sai Baba</span></h2>
+      <div class="divider-yellow"></div>
+    </div>
+    <div class="row g-4">
+      {% for icon,title,desc in [
+        ('certificate','Bosch Authorized','Official Bosch service center with certified technicians and genuine parts.'),
+        ('clock','Fast Turnaround','Most repairs completed same day. Emergency service available.'),
+        ('shield-alt','Genuine Parts Only','We never compromise. Only genuine, brand-certified parts.'),
+        ('tools','Expert Technicians','18+ years of experience across all vehicle types and brands.'),
+        ('rupee-sign','Transparent Pricing','No hidden charges. Free diagnosis with every service booking.'),
+        ('headset','After-Service Support','We stand behind our work. Post-service support always available.')
+      ] %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 70 }}">
+        <div class="card-dark h-100">
+          <div class="d-flex gap-4">
+            <div style="width:50px;height:50px;background:rgba(255,214,0,0.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-{{ icon }} text-warning fa-lg"></i></div>
+            <div>
+              <h6 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px">{{ title }}</h6>
+              <p class="text-muted small mb-0">{{ desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container" data-aos="fade-up">
+    <div class="cta-banner">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:800"><i class="fas fa-bolt text-warning me-2"></i>Ready to Fix Your Vehicle's Electrical Issues?</h3>
+          <p class="text-muted mb-0 mt-2">Book a service online or visit us directly. Expert help is just a click away.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="/booking" class="btn-primary-custom me-2"><i class="fas fa-calendar-check"></i> Book Now</a>
+          <a href="tel:+919959592564" class="btn-outline-custom"><i class="fas fa-phone"></i> Call Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
