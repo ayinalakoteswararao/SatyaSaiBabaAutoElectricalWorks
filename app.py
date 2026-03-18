@@ -13,11 +13,11 @@ from functools import wraps
 from flask import (Flask, render_template, request, jsonify, redirect,
                    url_for, session, flash)
 from flask.json.provider import DefaultJSONProvider
-from flask_mysqldb import MySQL
 from flask_socketio import SocketIO, emit
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-import MySQLdb.cursors
+import pymysql
+import pymysql.cursors
 
 # Custom JSON Provider to handle timedelta and other non-serializable types
 class CustomJSONProvider(DefaultJSONProvider):
@@ -44,24 +44,59 @@ app.secret_key = os.environ.get('SECRET_KEY', 'satya-sai-secret-key-2024-auto-el
 app.json = CustomJSONProvider(app)
 
 # ─── MySQL Config ─────────────────────────────────────────────────────────────
-app.config['MYSQL_HOST']     = os.environ.get('MYSQL_HOST', 'localhost')
-app.config['MYSQL_PORT']     = int(os.environ.get('MYSQL_PORT', 3306))
-app.config['MYSQL_USER']     = os.environ.get('MYSQL_USER', 'root')
-app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', 'password')
-app.config['MYSQL_DB']       = os.environ.get('MYSQL_DB', 'satya_sai_auto')
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
+MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
+MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
+MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'password')
+MYSQL_DB = os.environ.get('MYSQL_DB', 'satya_sai_auto')
 
-# SSL configuration for TiDB Cloud / production
-app.config['MYSQL_SSL_CA'] = os.environ.get('MYSQL_SSL_CA', None)
-app.config['MYSQL_SSL_VERIFY_CERT'] = True
+# SSL configuration for TiDB Cloud
+mysql_ssl_config = None
+if 'tidbcloud.com' in MYSQL_HOST:
+    mysql_ssl_config = {'ca': None}  # Use system CA certs with SSL
 
-mysql   = MySQL(app)
+def get_db_connection():
+    """Get database connection with proper SSL configuration"""
+    if mysql_ssl_config:
+        return pymysql.connect(
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            database=MYSQL_DB,
+            cursorclass=pymysql.cursors.DictCursor,
+            ssl=mysql_ssl_config,
+            connect_timeout=10
+        )
+    else:
+        return pymysql.connect(
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            database=MYSQL_DB,
+            cursorclass=pymysql.cursors.DictCursor,
+            connect_timeout=10
+        )
+
+# Remove old MySQL init
+mysql = None  # Placeholder - we use get_db_connection() now
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
+# Store connection globally for commit access
+_db_connection = None
+
 def get_cursor():
-    return mysql.connection.cursor()
+    global _db_connection
+    _db_connection = get_db_connection()
+    return _db_connection.cursor()
+
+def commit_db():
+    global _db_connection
+    if _db_connection:
+        _db_connection.commit()
 
 def login_required(f):
     @wraps(f)
@@ -79,7 +114,7 @@ def log_inventory_change(item_type, item_id, action, qty_change, qty_before, qty
                        (item_type,item_id,action,quantity_change,quantity_before,quantity_after,notes)
                        VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                     (item_type, item_id, action, qty_change, qty_before, qty_after, notes))
-        mysql.connection.commit()
+        commit_db()
         # Emit real-time update
         socketio.emit('inventory_update', {
             'item_type': item_type,
@@ -203,7 +238,7 @@ def booking():
                             (request.form['name'], request.form['phone'],
                              request.form.get('email',''),
                              request.form['vehicle_type'], request.form.get('vehicle_number','')))
-                mysql.connection.commit()
+                commit_db()
                 customer_id = cur.lastrowid
             else:
                 customer_id = customer['id']
@@ -217,7 +252,7 @@ def booking():
                          request.form['vehicle_type'], request.form.get('vehicle_number',''),
                          request.form.get('vehicle_make',''), request.form.get('vehicle_model',''),
                          request.form.get('problem_description','')))
-            mysql.connection.commit()
+            commit_db()
             booking_id = cur.lastrowid
 
             # Emit real-time notification to admin
@@ -261,7 +296,7 @@ def contact():
                         (request.form['name'], request.form.get('phone',''),
                          request.form.get('email',''), request.form.get('subject',''),
                          request.form['message']))
-            mysql.connection.commit()
+            commit_db()
 
             socketio.emit('new_inquiry', {
                 'name': request.form['name'],
@@ -376,7 +411,7 @@ def admin_add_product():
                  request.form.get('category_id') or None, request.form['vehicle_type'],
                  request.form.get('part_number',''), request.form.get('price',0),
                  request.form.get('stock_quantity',0), request.form.get('description','')))
-    mysql.connection.commit()
+    commit_db()
     flash('Product added successfully!', 'success')
     return redirect(url_for('admin_products'))
 
@@ -394,7 +429,7 @@ def admin_edit_product(pid):
                  request.form.get('category_id') or None, request.form['vehicle_type'],
                  request.form.get('part_number',''), request.form.get('price',0),
                  new_qty, request.form.get('description',''), pid))
-    mysql.connection.commit()
+    commit_db()
 
     if old and old['stock_quantity'] != new_qty:
         log_inventory_change('product', pid, 'set',
@@ -409,7 +444,7 @@ def admin_edit_product(pid):
 def admin_delete_product(pid):
     cur = get_cursor()
     cur.execute("UPDATE products SET is_active=0 WHERE id=%s", (pid,))
-    mysql.connection.commit()
+    commit_db()
     flash('Product removed.', 'success')
     return redirect(url_for('admin_products'))
 
@@ -436,7 +471,7 @@ def admin_update_booking(bid):
     cur = get_cursor()
     cur.execute("UPDATE bookings SET status=%s, notes=%s WHERE id=%s",
                 (request.form['status'], request.form.get('notes',''), bid))
-    mysql.connection.commit()
+    commit_db()
     flash('Booking status updated!', 'success')
     return redirect(url_for('admin_bookings'))
 
@@ -459,7 +494,7 @@ def admin_add_battery():
                  request.form.get('voltage',12), request.form['vehicle_type'],
                  request.form.get('warranty_months',12), request.form.get('price',0),
                  request.form.get('stock_quantity',0), request.form.get('description','')))
-    mysql.connection.commit()
+    commit_db()
     flash('Battery added!', 'success')
     return redirect(url_for('admin_batteries'))
 
@@ -477,7 +512,7 @@ def admin_edit_battery(bid):
                  request.form.get('voltage',12), request.form['vehicle_type'],
                  request.form.get('warranty_months',12), request.form.get('price',0),
                  new_qty, request.form.get('description',''), bid))
-    mysql.connection.commit()
+    commit_db()
 
     if old and old['stock_quantity'] != new_qty:
         log_inventory_change('battery', bid, 'set',
@@ -495,7 +530,7 @@ def admin_inquiries():
     cur.execute("SELECT * FROM inquiries ORDER BY created_at DESC")
     inquiries = cur.fetchall()
     cur.execute("UPDATE inquiries SET is_read=1")
-    mysql.connection.commit()
+    commit_db()
     return render_template('admin/inquiries.html', inquiries=inquiries)
 
 # Admin: Brands
@@ -513,7 +548,7 @@ def admin_add_brand():
     cur = get_cursor()
     cur.execute("INSERT INTO brands (name,description) VALUES (%s,%s)",
                 (request.form['name'], request.form.get('description','')))
-    mysql.connection.commit()
+    commit_db()
     flash('Brand added!', 'success')
     return redirect(url_for('admin_brands'))
 
@@ -541,7 +576,7 @@ def init_db():
                 pw_hash = generate_password_hash('admin123')
                 cur.execute("INSERT INTO admin (username,password_hash,email) VALUES (%s,%s,%s)",
                             ('admin', pw_hash, 'admin@satyasai.com'))
-                mysql.connection.commit()
+                commit_db()
                 print("Default admin created: admin / admin123")
     except Exception as e:
         print(f"DB init note: {e}")
