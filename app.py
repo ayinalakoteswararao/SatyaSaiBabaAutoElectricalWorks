@@ -44,40 +44,21 @@ app.secret_key = os.environ.get('SECRET_KEY', 'satya-sai-secret-key-2024-auto-el
 app.json = CustomJSONProvider(app)
 
 # ─── MySQL Config ─────────────────────────────────────────────────────────────
-MYSQL_HOST = os.environ.get('MYSQL_HOST', 'gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com')
-MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 4000))
-MYSQL_USER = os.environ.get('MYSQL_USER', '31QXBzehbcJionG.root')
-MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'DllaRUd5b4KdihDM')
-MYSQL_DB = os.environ.get('MYSQL_DB', 'sys')
-
-# SSL configuration for TiDB Cloud
-mysql_ssl_config = None
-if 'tidbcloud.com' in MYSQL_HOST:
-    mysql_ssl_config = {'ca': None}  # Use system CA certs with SSL
+# We fetch from environment variables (e.g., set in Vercel)
+# and provide your TiDB credentials as a fallback just in case.
 
 def get_db_connection():
-    """Get database connection with proper SSL configuration"""
-    if mysql_ssl_config:
-        return pymysql.connect(
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD,
-            database=MYSQL_DB,
-            cursorclass=pymysql.cursors.DictCursor,
-            ssl=mysql_ssl_config,
-            connect_timeout=10
-        )
-    else:
-        return pymysql.connect(
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD,
-            database=MYSQL_DB,
-            cursorclass=pymysql.cursors.DictCursor,
-            connect_timeout=10
-        )
+    """Get database connection with proper SSL configuration for TiDB"""
+    return pymysql.connect(
+        host=os.getenv("DB_HOST", os.getenv("MYSQL_HOST", "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com")),
+        port=int(os.getenv("DB_PORT", os.getenv("MYSQL_PORT", 4000))),
+        user=os.getenv("DB_USER", os.getenv("MYSQL_USER", "31QXBzehbcJionG.root")),
+        password=os.getenv("DB_PASSWORD", os.getenv("MYSQL_PASSWORD", "DllaRUd5b4KdihDM")),
+        database=os.getenv("DB_NAME", os.getenv("MYSQL_DB", "sys")),
+        cursorclass=pymysql.cursors.DictCursor,
+        connect_timeout=10,
+        ssl={"ca": None}  # Required for TiDB Cloud
+    )
 
 # Remove old MySQL init
 mysql = None  # Placeholder - we use get_db_connection() now
