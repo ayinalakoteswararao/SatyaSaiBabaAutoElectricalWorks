@@ -127,6 +127,14 @@ def log_inventory_change(item_type, item_id, action, qty_change, qty_before, qty
 
 # ─── PUBLIC ROUTES ────────────────────────────────────────────────────────────
 
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # This will catch all unhandled exceptions and show them.
+    # Useful for debugging on Vercel where logs might be hard to access immediately.
+    import traceback
+    error_details = traceback.format_exc()
+    return f"<h1>Internal Server Error</h1><p>The application encountered an error.</p><h3>Error Details:</h3><pre>{str(e)}</pre><hr><p><b>Traceback:</b></p><pre>{error_details}</pre>", 500
+
 @app.route('/')
 def index():
     cur = get_cursor()
