@@ -44,11 +44,11 @@ app.secret_key = os.environ.get('SECRET_KEY', 'satya-sai-secret-key-2024-auto-el
 app.json = CustomJSONProvider(app)
 
 # ─── MySQL Config ─────────────────────────────────────────────────────────────
-MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
-MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
-MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
-MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'password')
-MYSQL_DB = os.environ.get('MYSQL_DB', 'satya_sai_auto')
+MYSQL_HOST = os.environ.get('MYSQL_HOST', 'gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com')
+MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 4000))
+MYSQL_USER = os.environ.get('MYSQL_USER', '31QXBzehbcJionG.root')
+MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'DllaRUd5b4KdihDM')
+MYSQL_DB = os.environ.get('MYSQL_DB', 'sys')
 
 # SSL configuration for TiDB Cloud
 mysql_ssl_config = None
